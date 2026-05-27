@@ -297,10 +297,6 @@ var Itop = {
         payload.fields.title = rawParams.alert_subject;
         payload.fields.description = textToHtml(rawParams.alert_message);
 
-        if (hasValue(rawParams.event_id)) {
-            payload.fields.description += '<!-- zbx_eid:' + escapeHtml(rawParams.event_id) + ' -->';
-        }
-
         setFieldIfValue(payload.fields, 'caller_id', Itop.params.caller_id);
         setFieldIfValue(payload.fields, 'origin', Itop.params.origin);
         setFieldIfValue(payload.fields, 'service_id', Itop.params.service_id);
@@ -309,6 +305,11 @@ var Itop = {
 
         mergeFields(payload.fields, fields);
         mergeFields(payload.fields, parseJSONParam(Itop.params, 'create_fields_json', {}));
+
+        if (hasValue(rawParams.event_id)) {
+            payload.fields.description = (payload.fields.description || '') +
+                    '<!-- zbx_eid:' + escapeHtml(rawParams.event_id) + ' -->';
+        }
 
         return payload;
     },
