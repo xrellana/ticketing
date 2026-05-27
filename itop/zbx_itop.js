@@ -356,7 +356,7 @@ var Itop = {
             return null;
         }
 
-        dedupMarker = 'zbx_eid:' + sanitizedId;
+        dedupMarker = 'zbx_eid:' + sanitizedId + ' -->';
         payload = {
             operation: 'core/get',
             class: Itop.params.class,
