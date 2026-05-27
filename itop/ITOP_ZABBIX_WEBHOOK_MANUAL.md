@@ -162,6 +162,7 @@ itop_recovery_stimuli=ev_resolve
 | `event_recovery_value` | `{EVENT.RECOVERY.VALUE}` | 是 | 原脚本兼容参数，非 trigger 事件判断会用到 |
 | `event_nseverity` | `{EVENT.NSEVERITY}` | 建议 | severity 数字 0-5 |
 | `event_tags_json` | `{EVENT.TAGSJSON}` | 建议 | 从 Zabbix tags 读取 team/agent/impact/urgency |
+| `event_id` | `{EVENT.ID}` | 建议 | 用于幂等性保护，防止重试时重复创建工单 |
 | `action_name` | `{ACTION.NAME}` | 是 | 保持原脚本兼容 |
 | `HTTPProxy` | 留空或代理 URL | 否 | Zabbix webhook 代理 |
 
@@ -470,6 +471,7 @@ event_update_status={EVENT.UPDATE.STATUS}
 event_recovery_value={EVENT.RECOVERY.VALUE}
 event_nseverity={EVENT.NSEVERITY}
 event_tags_json={EVENT.TAGSJSON}
+event_id={EVENT.ID}
 action_name={ACTION.NAME}
 HTTPProxy=
 

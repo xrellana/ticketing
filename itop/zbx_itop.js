@@ -306,6 +306,11 @@ var Itop = {
         mergeFields(payload.fields, fields);
         mergeFields(payload.fields, parseJSONParam(Itop.params, 'create_fields_json', {}));
 
+        if (hasValue(rawParams.event_id)) {
+            payload.fields.description = (payload.fields.description || '') +
+                    '<!-- zbx_eid:' + escapeHtml(rawParams.event_id) + ' -->';
+        }
+
         return payload;
     },
 
@@ -338,6 +343,44 @@ var Itop = {
         return payload;
     },
 
+    findExistingTicket: function (eventId) {
+        if (!hasValue(eventId)) {
+            return null;
+        }
+
+        var sanitizedId = String(eventId).replace(/[^0-9]/g, ''),
+            dedupMarker,
+            payload,
+            queryResult;
+
+        if (sanitizedId === '') {
+            return null;
+        }
+
+        dedupMarker = 'zbx_eid:' + sanitizedId + ' -->';
+        payload = {
+            operation: 'core/get',
+            class: Itop.params.class,
+            key: "SELECT " + Itop.params.class + " WHERE description LIKE '%" + dedupMarker + "%'",
+            output_fields: getParam(Itop.params, 'output_fields', 'id, friendlyname, status')
+        };
+
+        try {
+            queryResult = Itop.request(payload);
+
+            if (queryResult && queryResult.response && hasValue(queryResult.response.id)) {
+                Zabbix.log(4, '[ iTop Webhook ] Found existing ticket ' + queryResult.response.id +
+                        ' for event ' + sanitizedId + ', skipping creation.');
+                return queryResult.response;
+            }
+        }
+        catch (e) {
+            Zabbix.log(3, '[ iTop Webhook ] Deduplication check failed, proceeding with create: ' + e);
+        }
+
+        return null;
+    },
+
     applyAssignment: function (id, assignmentFields, operationType) {
         var stimulus;
 
@@ -351,7 +394,12 @@ var Itop = {
             return;
         }
 
-        Itop.request(Itop.buildStimulusPayload(id, stimulus, assignmentFields));
+        try {
+            Itop.request(Itop.buildStimulusPayload(id, stimulus, assignmentFields));
+        }
+        catch (e) {
+            Zabbix.log(3, '[ iTop Webhook ] Assignment failed (non-fatal): ' + e);
+        }
     },
 
     applyRecovery: function (rawParams, id) {
@@ -434,6 +482,7 @@ try {
         isProblemEvent,
         isUpdateEvent,
         isRecoveryEvent,
+        existing,
         response;
 
     Object.keys(params)
@@ -479,25 +528,39 @@ try {
 
     // Create issue for non trigger-based events.
     if (!isTriggerEvent && params.event_recovery_value !== '0') {
-        response = Itop.request(Itop.buildCreatePayload(params, priorityFields));
+        existing = Itop.findExistingTicket(params.event_id);
 
-        if (parseBoolean(Itop.params.assign_on_create, true)) {
-            Itop.applyAssignment(response.response.id, assignmentFields, 'create');
+        if (existing) {
+            response = {response: existing};
+        }
+        else {
+            response = Itop.request(Itop.buildCreatePayload(params, priorityFields));
+
+            if (parseBoolean(Itop.params.assign_on_create, true)) {
+                Itop.applyAssignment(response.response.id, assignmentFields, 'create');
+            }
         }
     }
     // Create issue for trigger-based events.
     else if (isProblemEvent && !isUpdateEvent && Itop.params.id === '{EVENT.TAGS.__zbx_itop_id}') {
-        response = Itop.request(Itop.buildCreatePayload(params, priorityFields));
+        existing = Itop.findExistingTicket(params.event_id);
+
+        if (existing) {
+            response = {response: existing};
+        }
+        else {
+            response = Itop.request(Itop.buildCreatePayload(params, priorityFields));
+
+            if (parseBoolean(Itop.params.assign_on_create, true)) {
+                Itop.applyAssignment(response.response.id, assignmentFields, 'create');
+            }
+        }
 
         result.tags.__zbx_itop_id = response.response.id;
         result.tags.__zbx_itop_key = response.response.friendlyname;
         result.tags.__zbx_itop_link = params.itop_url + (params.itop_url.endsWith('/') ? '' : '/') +
                 'pages/UI.php?operation=details&class=' + encodeURIComponent(Itop.params.class) + '&id=' +
                 encodeURIComponent(response.response.id);
-
-        if (parseBoolean(Itop.params.assign_on_create, true)) {
-            Itop.applyAssignment(response.response.id, assignmentFields, 'create');
-        }
     }
     // Update, assign or close an already created trigger-based issue.
     else {
