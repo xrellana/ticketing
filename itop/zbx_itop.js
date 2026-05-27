@@ -407,12 +407,7 @@ var Itop = {
             i;
 
         for (i = 0; i < stimuli.length; i++) {
-            try {
-                Itop.request(Itop.buildStimulusPayload(id, stimuli[i], i === 0 ? fields : {}));
-            }
-            catch (e) {
-                Zabbix.log(3, '[ iTop Webhook ] Recovery stimulus "' + stimuli[i] + '" failed (non-fatal): ' + e);
-            }
+            Itop.request(Itop.buildStimulusPayload(id, stimuli[i], i === 0 ? fields : {}));
         }
     },
 
