@@ -17,8 +17,6 @@ ENTERPRISES_OID = (1, 3, 6, 1, 4, 1)
 GROUP_NAME = "Templates/SNMP devices"
 OUT_FILE = "zabbix_5.0_vertiv_enp_snmp_templates.xml"
 SLIM_UPS_OUT_FILE = "zabbix_5.0_vertiv_ups_ita2_snmp_template_slim.xml"
-MAX_VALUE_MAP_NAME_LEN = 60
-
 SLIM_UPS_OBJECTS = {
     ("identManufacturer", "ident", 1),
     ("identModel", "ident", 2),
@@ -337,11 +335,11 @@ def parse_mib(path: Path) -> MibModule:
 
 def enum_map_name(enum: tuple[tuple[int, str], ...]) -> str:
     digest = hashlib.sha1(repr(enum).encode("utf-8")).hexdigest()[:8]
-    labels = "_".join(slug(label) for _, label in enum)
-    prefix = "Vertiv enum "
-    label_len = MAX_VALUE_MAP_NAME_LEN - len(prefix) - len(digest) - 1
-    label_part = labels[:label_len].rstrip("_") or "map"
-    return f"{prefix}{label_part}_{digest}"
+    return f"Vertiv enum {digest}"
+
+
+def enum_sort_key(enum: tuple[tuple[int, str], ...]) -> tuple[str, tuple[tuple[int, str], ...]]:
+    return "_".join(slug(label) for _, label in enum), enum
 
 
 def value_type(obj: MibObject) -> str:
@@ -571,7 +569,7 @@ def build_export(
 
     if enum_maps:
         value_maps = sub(root, "value_maps")
-        for enum, name in sorted(enum_maps.items(), key=lambda pair: pair[1]):
+        for enum, name in sorted(enum_maps.items(), key=lambda pair: enum_sort_key(pair[0])):
             value_map = sub(value_maps, "value_map")
             sub(value_map, "name", name)
             mappings = sub(value_map, "mappings")
