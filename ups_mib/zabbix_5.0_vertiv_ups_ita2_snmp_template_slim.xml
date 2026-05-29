@@ -1,0 +1,2090 @@
+<?xml version='1.0' encoding='utf-8'?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2026-05-29T06:32:52Z</date>
+    <groups>
+        <group>
+            <name>Templates/SNMP devices</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template Vertiv ENP UPS ITA2 SNMP Slim</template>
+            <name>Template Vertiv ENP UPS ITA2 SNMP Slim</name>
+            <description>Generated from ENP_UPS_ITA2[COM]-MIB.mib for Zabbix 5.0 XML import.
+Root OID: .1.3.6.1.4.1.13400.2.4067
+Scalar objects use numeric OIDs so Zabbix does not need these MIB files installed.
+SNMP trap items are disabled by default; enable them only after SNMP trap collection is configured.
+Slim UPS-only profile: identification, input/output electrical metrics, battery metrics, power state, communication state, and core UPS alarms.
+Write/control MIB objects and non-UPS ENV/RDU objects are intentionally excluded.</description>
+            <groups>
+                <group>
+                    <name>Templates/SNMP devices</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Alarms</name>
+                </application>
+                <application>
+                    <name>Battery</name>
+                </application>
+                <application>
+                    <name>Bypass</name>
+                </application>
+                <application>
+                    <name>Identification</name>
+                </application>
+                <application>
+                    <name>Input</name>
+                </application>
+                <application>
+                    <name>Output</name>
+                </application>
+                <application>
+                    <name>System</name>
+                </application>
+                <application>
+                    <name>Traps</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>identManufacturer</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.1.1.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.identmanufacturer.ident_1</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>0</trends>
+                    <status>ENABLED</status>
+                    <value_type>CHAR</value_type>
+                    <description>The name of the device manufacturer.
+MIB object: identManufacturer
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.1.1.0</description>
+                    <applications>
+                        <application>
+                            <name>Identification</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>identModel</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.1.2.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.identmodel.ident_2</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>0</trends>
+                    <status>ENABLED</status>
+                    <value_type>CHAR</value_type>
+                    <description>The manufacturers model designation of the device.
+MIB object: identModel
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.1.2.0</description>
+                    <applications>
+                        <application>
+                            <name>Identification</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>phaseainputvoltage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.2.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.phaseainputvoltage.group2_2</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>V</units>
+                    <description>phaseainputvoltage, stored as 0.1V.
+MIB object: phaseainputvoltage
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.2.0</description>
+                    <applications>
+                        <application>
+                            <name>Input</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>phasebinputvoltage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.3.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.phasebinputvoltage.group2_3</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>V</units>
+                    <description>phasebinputvoltage, stored as 0.1V.
+MIB object: phasebinputvoltage
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.3.0</description>
+                    <applications>
+                        <application>
+                            <name>Input</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>phasecinputvoltage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.4.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.phasecinputvoltage.group2_4</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>V</units>
+                    <description>phasecinputvoltage, stored as 0.1V.
+MIB object: phasecinputvoltage
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.4.0</description>
+                    <applications>
+                        <application>
+                            <name>Input</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>phaseaoutputvoltage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.5.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.phaseaoutputvoltage.group2_5</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>V</units>
+                    <description>phaseaoutputvoltage, stored as 0.1V.
+MIB object: phaseaoutputvoltage
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.5.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>phaseboutputvoltage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.6.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.phaseboutputvoltage.group2_6</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>V</units>
+                    <description>phaseboutputvoltage, stored as 0.1V.
+MIB object: phaseboutputvoltage
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.6.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>phasecoutputvoltage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.7.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.phasecoutputvoltage.group2_7</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>V</units>
+                    <description>phasecoutputvoltage, stored as 0.1V.
+MIB object: phasecoutputvoltage
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.7.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>phaseaoutputcurrent</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.8.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.phaseaoutputcurrent.group2_8</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>A</units>
+                    <description>phaseaoutputcurrent, stored as 0.1A.
+MIB object: phaseaoutputcurrent
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.8.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>phaseboutputcurrent</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.9.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.phaseboutputcurrent.group2_9</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>A</units>
+                    <description>phaseboutputcurrent, stored as 0.1A.
+MIB object: phaseboutputcurrent
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.9.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>phasecoutputcurrent</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.10.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.phasecoutputcurrent.group2_10</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>A</units>
+                    <description>phasecoutputcurrent, stored as 0.1A.
+MIB object: phasecoutputcurrent
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.10.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>outputfrequency</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.11.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.outputfrequency.group2_11</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>Hz</units>
+                    <description>outputfrequency, stored as 0.1HZ.
+MIB object: outputfrequency
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.11.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>inputphasenumber</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.12.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.inputphasenumber.group2_12</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>inputphasenumber, status.
+MIB object: inputphasenumber
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.12.0</description>
+                    <applications>
+                        <application>
+                            <name>Input</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum unknown_simplex_duplex_threephase_1147ec1b</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>lineabinputvoltage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.13.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.lineabinputvoltage.group2_13</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>V</units>
+                    <description>lineabinputvoltage, stored as 0.1V.
+MIB object: lineabinputvoltage
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.13.0</description>
+                    <applications>
+                        <application>
+                            <name>Input</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>linebcinputvoltage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.14.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.linebcinputvoltage.group2_14</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>V</units>
+                    <description>linebcinputvoltage, stored as 0.1V.
+MIB object: linebcinputvoltage
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.14.0</description>
+                    <applications>
+                        <application>
+                            <name>Input</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>linecainputvoltage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.15.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.linecainputvoltage.group2_15</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>V</units>
+                    <description>linecainputvoltage, stored as 0.1V.
+MIB object: linecainputvoltage
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.15.0</description>
+                    <applications>
+                        <application>
+                            <name>Input</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>phaseainputcurrent</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.16.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.phaseainputcurrent.group2_16</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>A</units>
+                    <description>phaseainputcurrent, stored as 0.1A.
+MIB object: phaseainputcurrent
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.16.0</description>
+                    <applications>
+                        <application>
+                            <name>Input</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>phasebinputcurrent</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.17.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.phasebinputcurrent.group2_17</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>A</units>
+                    <description>phasebinputcurrent, stored as 0.1A.
+MIB object: phasebinputcurrent
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.17.0</description>
+                    <applications>
+                        <application>
+                            <name>Input</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>phasecinputcurrent</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.18.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.phasecinputcurrent.group2_18</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>A</units>
+                    <description>phasecinputcurrent, stored as 0.1A.
+MIB object: phasecinputcurrent
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.18.0</description>
+                    <applications>
+                        <application>
+                            <name>Input</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>systeminputfrequency</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.19.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.systeminputfrequency.group2_19</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>Hz</units>
+                    <description>systeminputfrequency, stored as 0.1HZ.
+MIB object: systeminputfrequency
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.19.0</description>
+                    <applications>
+                        <application>
+                            <name>Input</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>bypassfrequency</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.29.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.bypassfrequency.group2_29</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>Hz</units>
+                    <description>bypassfrequency, stored as 0.1HZ.
+MIB object: bypassfrequency
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.29.0</description>
+                    <applications>
+                        <application>
+                            <name>Bypass</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>outputphasenumber</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.30.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.outputphasenumber.group2_30</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>outputphasenumber, status.
+MIB object: outputphasenumber
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.30.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum unknown_simplex_duplex_threephase_1147ec1b</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>localphaseaoutputactivepow</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.37.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.localphaseaoutputactivepow.group2_37</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>kW</units>
+                    <description>localphaseaoutputactivepow, stored as 0.1kW.
+MIB object: localphaseaoutputactivepow
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.37.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>localphaseboutputactivepow</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.38.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.localphaseboutputactivepow.group2_38</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>kW</units>
+                    <description>localphaseboutputactivepow, stored as 0.1kW.
+MIB object: localphaseboutputactivepow
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.38.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>localphasecoutputactivepow</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.39.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.localphasecoutputactivepow.group2_39</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>kW</units>
+                    <description>localphasecoutputactivepow, stored as 0.1kW.
+MIB object: localphasecoutputactivepow
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.39.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>localphaseaoutputapparentp</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.40.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.localphaseaoutputapparentp.group2_40</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>kVA</units>
+                    <description>localphaseaoutputapparentp, stored as 0.1KVA.
+MIB object: localphaseaoutputapparentp
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.40.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>localphaseboutputapparentp</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.41.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.localphaseboutputapparentp.group2_41</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>kVA</units>
+                    <description>localphaseboutputapparentp, stored as 0.1KVA.
+MIB object: localphaseboutputapparentp
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.41.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>localphasecoutputapparentp</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.42.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.localphasecoutputapparentp.group2_42</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>kVA</units>
+                    <description>localphasecoutputapparentp, stored as 0.1KVA.
+MIB object: localphasecoutputapparentp
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.42.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>localphaseaoutputloadperce</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.43.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.localphaseaoutputloadperce.group2_43</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <description>localphaseaoutputloadperce, stored as 0.1%.
+MIB object: localphaseaoutputloadperce
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.43.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>localphaseboutputloadperce</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.44.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.localphaseboutputloadperce.group2_44</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <description>localphaseboutputloadperce, stored as 0.1%.
+MIB object: localphaseboutputloadperce
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.44.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>localphasecoutputloadperce</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.45.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.localphasecoutputloadperce.group2_45</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <description>localphasecoutputloadperce, stored as 0.1%.
+MIB object: localphasecoutputloadperce
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.45.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>upsrunningtime</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.56.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.upsrunningtime.group2_56</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>d</units>
+                    <description>upsrunningtime, stored as 0.1day.
+MIB object: upsrunningtime
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.56.0</description>
+                    <applications>
+                        <application>
+                            <name>System</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>batteryvoltage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.57.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batteryvoltage.group2_57</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>V</units>
+                    <description>batteryvoltage, stored as 0.1V.
+MIB object: batteryvoltage
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.57.0</description>
+                    <applications>
+                        <application>
+                            <name>Battery</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>batterychargingcurrent</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.58.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batterychargingcurrent.group2_58</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>A</units>
+                    <description>batterychargingcurrent, stored as 0.1A.
+MIB object: batterychargingcurrent
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.58.0</description>
+                    <applications>
+                        <application>
+                            <name>Battery</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>batterydischargecurrent</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.59.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batterydischargecurrent.group2_59</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>A</units>
+                    <description>batterydischargecurrent, stored as 0.1A.
+MIB object: batterydischargecurrent
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.59.0</description>
+                    <applications>
+                        <application>
+                            <name>Battery</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>batterybackuptime</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.63.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batterybackuptime.group2_63</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>min</units>
+                    <description>batterybackuptime, stored as 0.1Min.
+MIB object: batterybackuptime
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.63.0</description>
+                    <applications>
+                        <application>
+                            <name>Battery</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>batterytemperature</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.64.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batterytemperature.group2_64</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>C</units>
+                    <description>batterytemperature, stored as 0.1degC.
+MIB object: batterytemperature
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.64.0</description>
+                    <applications>
+                        <application>
+                            <name>Battery</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>batterycurrentcapacity</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.66.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batterycurrentcapacity.group2_66</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <description>batterycurrentcapacity, stored as 0.1%.
+MIB object: batterycurrentcapacity
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.66.0</description>
+                    <applications>
+                        <application>
+                            <name>Battery</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>inputpower</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.68.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.inputpower.group2_68</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>kWh</units>
+                    <description>inputpower, stored as 0.1KWH.
+MIB object: inputpower
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.68.0</description>
+                    <applications>
+                        <application>
+                            <name>Input</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>outputpower</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.69.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.outputpower.group2_69</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>kWh</units>
+                    <description>outputpower, stored as 0.1KWH.
+MIB object: outputpower
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.69.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.1</params>
+                            <error_handler>ORIGINAL_ERROR</error_handler>
+                            <error_handler_params />
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>powersupply</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.70.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.powersupply.group2_70</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>powersupply, status.
+MIB object: powersupply
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.70.0</description>
+                    <applications>
+                        <application>
+                            <name>System</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum upsshutdown_utilityonline_onbattery_onbypass_c2fdf878</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>inputpowerstatus</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.71.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.inputpowerstatus.group2_71</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>inputpowerstatus, status.
+MIB object: inputpowerstatus
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.71.0</description>
+                    <applications>
+                        <application>
+                            <name>Input</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum utilityonline_onbattery_upsonunionmode_upsshutdown_80e041e2</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>batterystatus</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.72.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batterystatus.group2_72</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>batterystatus, status.
+MIB object: batterystatus
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.72.0</description>
+                    <applications>
+                        <application>
+                            <name>Battery</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum nondischargeandnonrechargeable_floatcharging_equalizationcharging_discharging_a7fabbc0</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>chargerstatus</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.74.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.chargerstatus.group2_74</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>chargerstatus, status.
+MIB object: chargerstatus
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.74.0</description>
+                    <applications>
+                        <application>
+                            <name>Battery</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum chargeron_chargeroff_2f41a165</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>parallelsystempowerstate</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.75.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.parallelsystempowerstate.group2_75</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>parallelsystempowerstate, status.
+MIB object: parallelsystempowerstate
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.75.0</description>
+                    <applications>
+                        <application>
+                            <name>System</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum maininverterpowersupply_onbattery_onbypass_upsshutdown_8e93cf6b</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>ineernetworkconnectionstatus</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.76.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.ineernetworkconnectionstatus.group2_76</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>ineernetworkconnectionstatus, status.
+MIB object: ineernetworkconnectionstatus
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.76.0</description>
+                    <applications>
+                        <application>
+                            <name>System</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum connected_disconnected_44b52aea</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>inputabnormal</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.79.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.inputabnormal.group2_79</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>inputabnormal, status.
+MIB object: inputabnormal
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.79.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>systemovertemp</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.80.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.systemovertemp.group2_80</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>systemovertemp, status.
+MIB object: systemovertemp
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.80.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>systembatterylowprewarning</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.81.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.systembatterylowprewarning.group2_81</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>systembatterylowprewarning, status.
+MIB object: systembatterylowprewarning
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.81.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>rectifieroverload</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.85.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.rectifieroverload.group2_85</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>rectifieroverload, status.
+MIB object: rectifieroverload
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.85.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>inverteroverload</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.87.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.inverteroverload.group2_87</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>inverteroverload, status.
+MIB object: inverteroverload
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.87.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>outputdisabled</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.90.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.outputdisabled.group2_90</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>outputdisabled, status.
+MIB object: outputdisabled
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.90.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>bypassabnormal</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.91.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.bypassabnormal.group2_91</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>bypassabnormal, status.
+MIB object: bypassabnormal
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.91.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>bypassovercurrent</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.94.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.bypassovercurrent.group2_94</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>bypassovercurrent, status.
+MIB object: bypassovercurrent
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.94.0</description>
+                    <applications>
+                        <application>
+                            <name>Bypass</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>batterylowprewarning</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.97.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batterylowprewarning.group2_97</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>batterylowprewarning, status.
+MIB object: batterylowprewarning
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.97.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>batteryvoltabnormal</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.98.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batteryvoltabnormal.group2_98</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>batteryvoltabnormal, status.
+MIB object: batteryvoltabnormal
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.98.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>nobattery</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.99.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.nobattery.group2_99</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>nobattery, status.
+MIB object: nobattery
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.99.0</description>
+                    <applications>
+                        <application>
+                            <name>Battery</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>batteryovertemp</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.100.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batteryovertemp.group2_100</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>batteryovertemp, status.
+MIB object: batteryovertemp
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.100.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>batteryaging</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.101.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batteryaging.group2_101</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>batteryaging, status.
+MIB object: batteryaging
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.101.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>batterytestfailure</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.102.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batterytestfailure.group2_102</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>batterytestfailure, status.
+MIB object: batterytestfailure
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.102.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>fanfailure</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.104.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.fanfailure.group2_104</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>fanfailure, status.
+MIB object: fanfailure
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.104.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>lossofredundancy</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.109.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.lossofredundancy.group2_109</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>lossofredundancy, status.
+MIB object: lossofredundancy
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.109.0</description>
+                    <applications>
+                        <application>
+                            <name>System</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>systemoverload</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.110.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.systemoverload.group2_110</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>systemoverload, status.
+MIB object: systemoverload
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.110.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>batterymode</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.115.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batterymode.group2_115</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>batterymode, status.
+MIB object: batterymode
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.115.0</description>
+                    <applications>
+                        <application>
+                            <name>Battery</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>bypassmode</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.116.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.bypassmode.group2_116</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>bypassmode, status.
+MIB object: bypassmode
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.116.0</description>
+                    <applications>
+                        <application>
+                            <name>Bypass</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>inverterfault</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.122.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.inverterfault.group2_122</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>inverterfault, status.
+MIB object: inverterfault
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.122.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>outputshortcircuit</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.127.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.outputshortcircuit.group2_127</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>outputshortcircuit, status.
+MIB object: outputshortcircuit
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.127.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>outputoffandvoltageisnotz</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.128.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.outputoffandvoltageisnotz.group2_128</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>outputoffandvoltageisnotz, status.
+MIB object: outputoffandvoltageisnotz
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.128.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>systemfault</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.155.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.systemfault.group2_155</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>systemfault, status.
+MIB object: systemfault
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.155.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>batteryeod</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.156.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.batteryeod.group2_156</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>batteryeod, status.
+MIB object: batteryeod
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.156.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>upshasnooutput</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.158.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.upshasnooutput.group2_158</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>upshasnooutput, status.
+MIB object: upshasnooutput
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.158.0</description>
+                    <applications>
+                        <application>
+                            <name>Output</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>systemwarning</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.160.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.systemwarning.group2_160</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>systemwarning, status.
+MIB object: systemwarning
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.160.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>outputvoltageabnormal</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.161.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.outputvoltageabnormal.group2_161</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>outputvoltageabnormal, status.
+MIB object: outputvoltageabnormal
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.161.0</description>
+                    <applications>
+                        <application>
+                            <name>Alarms</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_alarm_244cb395</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>communicationstatus</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.13400.2.4067.2.2.164.0</snmp_oid>
+                    <key>vertiv.enp_ups_ita2.communicationstatus.group2_164</key>
+                    <delay>1m</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>ENABLED</status>
+                    <value_type>UNSIGNED</value_type>
+                    <description>communicationstatus, status.
+MIB object: communicationstatus
+Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.164.0</description>
+                    <applications>
+                        <application>
+                            <name>System</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Vertiv enum normal_failure_71efbb87</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>SNMP trap: systemAlarmTrapFormatDefine</name>
+                    <type>SNMP_TRAP</type>
+                    <key>snmptrap["\.1\.3\.6\.1\.4\.1\.13400\.2\.4067\.4\.1"]</key>
+                    <delay>0</delay>
+                    <history>90d</history>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>LOG</value_type>
+                    <description>An alarm trap is sent when an alarm occurs (activated) or
+returns to normal state (deactivated). Alarm traps are logged
+in alarmTrapTable. Variables in this trap:
+* systemAlarmIndex - The unique sequence number of this alarm trap.
+* systemAlarmTime - Date and time when event occured (local time).
+* systemAlarmStatusChange - (0) activated or (1) deactivated.
+* systemAlarmSeverity - The severity of the alarm..
+* systemAlarmId - Alarm id.
+* systemAlarmEquipId - Alarm equipment id.
+* systemAlarmEquipTypeId - Alarm equipment type id.
+Notification OID: .1.3.6.1.4.1.13400.2.4067.4.1</description>
+                    <applications>
+                        <application>
+                            <name>Traps</name>
+                        </application>
+                    </applications>
+                </item>
+            </items>
+        </template>
+    </templates>
+    <value_maps>
+        <value_map>
+            <name>Vertiv enum chargeron_chargeroff_2f41a165</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>chargeron</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>chargeroff</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>Vertiv enum connected_disconnected_44b52aea</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>connected</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>disconnected</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>Vertiv enum maininverterpowersupply_onbattery_onbypass_upsshutdown_8e93cf6b</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>maininverterpowersupply</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>onbattery</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>onbypass</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>upsshutdown</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>Vertiv enum nondischargeandnonrechargeable_floatcharging_equalizationcharging_discharging_a7fabbc0</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>nondischargeandnonrechargeable</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>floatcharging</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>equalizationcharging</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>discharging</newvalue>
+                </mapping>
+                <mapping>
+                    <value>4</value>
+                    <newvalue>inselftest</newvalue>
+                </mapping>
+                <mapping>
+                    <value>5</value>
+                    <newvalue>nobattery</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>Vertiv enum normal_alarm_244cb395</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>normal</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>alarm</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>Vertiv enum normal_failure_71efbb87</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>normal</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>failure</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>Vertiv enum unknown_simplex_duplex_threephase_1147ec1b</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>unknown</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>simplex</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>duplex</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>threephase</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>Vertiv enum upsshutdown_utilityonline_onbattery_onbypass_c2fdf878</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>upsshutdown</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>utilityonline</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>onbattery</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>onbypass</newvalue>
+                </mapping>
+                <mapping>
+                    <value>4</value>
+                    <newvalue>upsonunionmode</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>Vertiv enum utilityonline_onbattery_upsonunionmode_upsshutdown_80e041e2</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>utilityonline</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>onbattery</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>upsonunionmode</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>upsshutdown</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+    </value_maps>
+</zabbix_export>

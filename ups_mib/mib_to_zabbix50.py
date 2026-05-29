@@ -10,12 +10,90 @@ import sys
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
+from typing import Callable, Iterable
 
 
 ENTERPRISES_OID = (1, 3, 6, 1, 4, 1)
 GROUP_NAME = "Templates/SNMP devices"
 OUT_FILE = "zabbix_5.0_vertiv_enp_snmp_templates.xml"
+SLIM_UPS_OUT_FILE = "zabbix_5.0_vertiv_ups_ita2_snmp_template_slim.xml"
+
+SLIM_UPS_OBJECTS = {
+    ("identManufacturer", "ident", 1),
+    ("identModel", "ident", 2),
+    ("phaseainputvoltage", "group2", 2),
+    ("phasebinputvoltage", "group2", 3),
+    ("phasecinputvoltage", "group2", 4),
+    ("phaseaoutputvoltage", "group2", 5),
+    ("phaseboutputvoltage", "group2", 6),
+    ("phasecoutputvoltage", "group2", 7),
+    ("phaseaoutputcurrent", "group2", 8),
+    ("phaseboutputcurrent", "group2", 9),
+    ("phasecoutputcurrent", "group2", 10),
+    ("outputfrequency", "group2", 11),
+    ("inputphasenumber", "group2", 12),
+    ("lineabinputvoltage", "group2", 13),
+    ("linebcinputvoltage", "group2", 14),
+    ("linecainputvoltage", "group2", 15),
+    ("phaseainputcurrent", "group2", 16),
+    ("phasebinputcurrent", "group2", 17),
+    ("phasecinputcurrent", "group2", 18),
+    ("systeminputfrequency", "group2", 19),
+    ("bypassfrequency", "group2", 29),
+    ("outputphasenumber", "group2", 30),
+    ("localphaseaoutputactivepow", "group2", 37),
+    ("localphaseboutputactivepow", "group2", 38),
+    ("localphasecoutputactivepow", "group2", 39),
+    ("localphaseaoutputapparentp", "group2", 40),
+    ("localphaseboutputapparentp", "group2", 41),
+    ("localphasecoutputapparentp", "group2", 42),
+    ("localphaseaoutputloadperce", "group2", 43),
+    ("localphaseboutputloadperce", "group2", 44),
+    ("localphasecoutputloadperce", "group2", 45),
+    ("upsrunningtime", "group2", 56),
+    ("batteryvoltage", "group2", 57),
+    ("batterychargingcurrent", "group2", 58),
+    ("batterydischargecurrent", "group2", 59),
+    ("batterybackuptime", "group2", 63),
+    ("batterytemperature", "group2", 64),
+    ("batterycurrentcapacity", "group2", 66),
+    ("inputpower", "group2", 68),
+    ("outputpower", "group2", 69),
+    ("powersupply", "group2", 70),
+    ("inputpowerstatus", "group2", 71),
+    ("batterystatus", "group2", 72),
+    ("chargerstatus", "group2", 74),
+    ("parallelsystempowerstate", "group2", 75),
+    ("ineernetworkconnectionstatus", "group2", 76),
+    ("inputabnormal", "group2", 79),
+    ("systemovertemp", "group2", 80),
+    ("systembatterylowprewarning", "group2", 81),
+    ("rectifieroverload", "group2", 85),
+    ("inverteroverload", "group2", 87),
+    ("outputdisabled", "group2", 90),
+    ("bypassabnormal", "group2", 91),
+    ("bypassovercurrent", "group2", 94),
+    ("batterylowprewarning", "group2", 97),
+    ("batteryvoltabnormal", "group2", 98),
+    ("nobattery", "group2", 99),
+    ("batteryovertemp", "group2", 100),
+    ("batteryaging", "group2", 101),
+    ("batterytestfailure", "group2", 102),
+    ("fanfailure", "group2", 104),
+    ("lossofredundancy", "group2", 109),
+    ("systemoverload", "group2", 110),
+    ("batterymode", "group2", 115),
+    ("bypassmode", "group2", 116),
+    ("inverterfault", "group2", 122),
+    ("outputshortcircuit", "group2", 127),
+    ("outputoffandvoltageisnotz", "group2", 128),
+    ("systemfault", "group2", 155),
+    ("batteryeod", "group2", 156),
+    ("upshasnooutput", "group2", 158),
+    ("systemwarning", "group2", 160),
+    ("outputvoltageabnormal", "group2", 161),
+    ("communicationstatus", "group2", 164),
+}
 
 
 @dataclass
@@ -47,6 +125,9 @@ class MibModule:
     objects: list[MibObject]
     notifications: list[Notification]
     skipped: list[str]
+
+
+ObjectFilter = Callable[[MibModule, MibObject], bool]
 
 
 def clean_text(value: str) -> str:
@@ -310,7 +391,10 @@ def application_for(obj: MibObject) -> str:
         return "Input"
     if re.search(r"output|inverter|outlet", combined):
         return "Output"
-    if re.search(r"temp|hum|door|smoke|warter|water|sensor|di", combined):
+    if re.search(
+        r"sensor|door|smoke|warter|water|uninstalldi|temp\d|hum\d|temperature|hightemp|lowtemp|highhum|lowhum",
+        combined,
+    ):
         return "Sensors"
     if re.search(r"setting|config|delay|interval|test|turn|remote|selfstart|redundance|lognumber|automan|blocked|criterion|limit", combined):
         return "Settings"
@@ -401,7 +485,28 @@ def readable_objects(module: MibModule) -> list[MibObject]:
     return result
 
 
-def build_export(modules: Iterable[MibModule]) -> ET.ElementTree:
+def object_key(obj: MibObject) -> tuple[str, str, int]:
+    return obj.name, obj.parent, obj.subid
+
+
+def is_slim_ups_object(module: MibModule, obj: MibObject) -> bool:
+    return module.identity == "eNP-UPS-ITA2" and object_key(obj) in SLIM_UPS_OBJECTS
+
+
+def template_objects(module: MibModule, object_filter: ObjectFilter | None) -> list[MibObject]:
+    objects = readable_objects(module)
+    if object_filter is None:
+        return objects
+    return [obj for obj in objects if object_filter(module, obj)]
+
+
+def build_export(
+    modules: Iterable[MibModule],
+    object_filter: ObjectFilter | None = None,
+    template_name_suffix: str = "",
+    extra_description_lines: Iterable[str] = (),
+    include_traps: bool = True,
+) -> ET.ElementTree:
     modules = list(modules)
     root = ET.Element("zabbix_export")
     sub(root, "version", "5.0")
@@ -411,49 +516,54 @@ def build_export(modules: Iterable[MibModule]) -> ET.ElementTree:
     group = sub(groups, "group")
     sub(group, "name", GROUP_NAME)
 
+    module_objects = [(module, template_objects(module, object_filter)) for module in modules]
+
     enum_maps: dict[tuple[tuple[int, str], ...], str] = {}
-    for module in modules:
-        for obj in readable_objects(module):
+    for _, objects in module_objects:
+        for obj in objects:
             if obj.enum and obj.enum not in enum_maps:
                 enum_maps[obj.enum] = enum_map_name(obj.enum)
 
     templates = sub(root, "templates")
-    for module in modules:
-        template_name = template_display_name(module.identity)
+    for module, objects in module_objects:
+        template_name = template_display_name(module.identity) + template_name_suffix
         template_key = slug(module.identity)
         template = sub(templates, "template")
         sub(template, "template", template_name)
         sub(template, "name", template_name)
+        description_lines = [
+            f"Generated from {module.file.name} for Zabbix 5.0 XML import.",
+            f"Root OID: .{'.'.join(map(str, module.root_oid))}",
+            "Scalar objects use numeric OIDs so Zabbix does not need these MIB files installed.",
+            "SNMP trap items are disabled by default; enable them only after SNMP trap collection is configured.",
+        ]
+        description_lines.extend(extra_description_lines)
         sub(
             template,
             "description",
-            "\n".join(
-                [
-                    f"Generated from {module.file.name} for Zabbix 5.0 XML import.",
-                    f"Root OID: .{'.'.join(map(str, module.root_oid))}",
-                    "Scalar objects use numeric OIDs so Zabbix does not need these MIB files installed.",
-                    "SNMP trap items are disabled by default; enable them only after SNMP trap collection is configured.",
-                ]
-            ),
+            "\n".join(description_lines),
         )
         template_groups = sub(template, "groups")
         template_group = sub(template_groups, "group")
         sub(template_group, "name", GROUP_NAME)
 
-        app_names = sorted({application_for(obj) for obj in readable_objects(module)} | {"Traps"})
+        app_names = {application_for(obj) for obj in objects}
+        if include_traps and module.notifications:
+            app_names.add("Traps")
         applications = sub(template, "applications")
-        for app_name in app_names:
+        for app_name in sorted(app_names):
             app = sub(applications, "application")
             sub(app, "name", app_name)
 
         items = sub(template, "items")
         duplicate_names: dict[str, int] = {}
-        for obj in readable_objects(module):
+        for obj in objects:
             duplicate_names[obj.name] = duplicate_names.get(obj.name, 0) + 1
-        for obj in readable_objects(module):
+        for obj in objects:
             add_item(items, template_key, obj, enum_maps, duplicate_names)
-        for notification in module.notifications:
-            add_trap_item(items, template_key, notification)
+        if include_traps:
+            for notification in module.notifications:
+                add_trap_item(items, template_key, notification)
 
     if enum_maps:
         value_maps = sub(root, "value_maps")
@@ -482,11 +592,31 @@ def main() -> int:
     out_path = base / OUT_FILE
     tree.write(out_path, encoding="utf-8", xml_declaration=True)
 
+    ups_module = next((module for module in modules if module.identity == "eNP-UPS-ITA2"), None)
+    if ups_module is not None:
+        slim_tree = build_export(
+            [ups_module],
+            object_filter=is_slim_ups_object,
+            template_name_suffix=" Slim",
+            extra_description_lines=[
+                "Slim UPS-only profile: identification, input/output electrical metrics, battery metrics, power state, communication state, and core UPS alarms.",
+                "Write/control MIB objects and non-UPS ENV/RDU objects are intentionally excluded.",
+            ],
+        )
+        slim_out_path = base / SLIM_UPS_OUT_FILE
+        slim_tree.write(slim_out_path, encoding="utf-8", xml_declaration=True)
+        print(f"Wrote {slim_out_path}")
+
     total_items = sum(len(readable_objects(module)) + len(module.notifications) for module in modules)
+    slim_items = 0
+    if ups_module is not None:
+        slim_items = len(template_objects(ups_module, is_slim_ups_object)) + len(ups_module.notifications)
     skipped = [entry for module in modules for entry in module.skipped]
     print(f"Wrote {out_path}")
     print(f"Templates: {len(modules)}")
     print(f"Items: {total_items}")
+    if ups_module is not None:
+        print(f"Slim UPS items: {slim_items}")
     print(f"Skipped notices: {len(skipped)}")
     for entry in skipped:
         print(f"  - {entry}")
