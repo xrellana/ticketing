@@ -109,6 +109,14 @@ class MibObject:
     table_column: bool
 
 
+@dataclass(frozen=True)
+class TriggerRule:
+    name: str
+    expression: str
+    priority: str
+    description: str = ""
+
+
 @dataclass
 class Notification:
     name: str
@@ -127,6 +135,123 @@ class MibModule:
 
 
 ObjectFilter = Callable[[MibModule, MibObject], bool]
+
+SLIM_TRIGGER_MACROS = (
+    ("{$UPS.NODATA.TIME}", "10m", "Time without SNMP data before reporting that UPS polling is unavailable."),
+    ("{$UPS.BATTERY.CAPACITY.MIN.WARN}", "20", "Warning threshold for remaining battery capacity, in percent."),
+    ("{$UPS.BACKUP.TIME.MIN.WARN}", "10", "Warning threshold for estimated battery backup time, in minutes."),
+    ("{$UPS.BATTERY.TEMP.MAX.WARN}", "40", "Warning threshold for battery temperature, in degrees Celsius."),
+    ("{$UPS.OUTPUT.LOAD.MAX.WARN}", "90", "Warning threshold for output load, in percent."),
+)
+
+SLIM_ALARM_PRIORITIES = {
+    "systemfault": "HIGH",
+    "inverterfault": "HIGH",
+    "outputshortcircuit": "HIGH",
+    "upshasnooutput": "HIGH",
+    "outputdisabled": "HIGH",
+    "batteryeod": "HIGH",
+    "nobattery": "HIGH",
+    "systemovertemp": "HIGH",
+    "batteryovertemp": "HIGH",
+    "inputabnormal": "AVERAGE",
+    "rectifieroverload": "AVERAGE",
+    "inverteroverload": "AVERAGE",
+    "bypassabnormal": "AVERAGE",
+    "bypassovercurrent": "AVERAGE",
+    "batteryvoltabnormal": "AVERAGE",
+    "fanfailure": "AVERAGE",
+    "lossofredundancy": "AVERAGE",
+    "systemoverload": "AVERAGE",
+    "outputvoltageabnormal": "AVERAGE",
+}
+
+SLIM_STATUS_TRIGGERS = {
+    ("identModel", "ident", 2): (
+        TriggerRule(
+            "UPS SNMP data is not available",
+            "{nodata({$UPS.NODATA.TIME})}=1",
+            "AVERAGE",
+            "No SNMP data has been received from the UPS for the configured interval.",
+        ),
+    ),
+    ("powersupply", "group2", 70): (
+        TriggerRule("UPS power supply is shut down", "{last()}=0", "HIGH"),
+        TriggerRule("UPS power supply is on battery", "{last()}=2", "WARNING"),
+        TriggerRule("UPS power supply is on bypass", "{last()}=3", "WARNING"),
+    ),
+    ("inputpowerstatus", "group2", 71): (
+        TriggerRule("UPS input power is on battery", "{last()}=1", "WARNING"),
+        TriggerRule("UPS input power is shut down", "{last()}=3", "HIGH"),
+    ),
+    ("batterystatus", "group2", 72): (
+        TriggerRule("UPS battery is discharging", "{last()}=3", "WARNING"),
+        TriggerRule("UPS battery is in self-test", "{last()}=4", "INFO"),
+        TriggerRule("UPS battery is missing", "{last()}=5", "HIGH"),
+    ),
+    ("chargerstatus", "group2", 74): (
+        TriggerRule("UPS charger is off", "{last()}=1", "WARNING"),
+    ),
+    ("parallelsystempowerstate", "group2", 75): (
+        TriggerRule("UPS parallel system is on battery", "{last()}=1", "WARNING"),
+        TriggerRule("UPS parallel system is on bypass", "{last()}=2", "WARNING"),
+        TriggerRule("UPS parallel system is shut down", "{last()}=3", "HIGH"),
+    ),
+    ("ineernetworkconnectionstatus", "group2", 76): (
+        TriggerRule("UPS internal network is disconnected", "{last()}=1", "AVERAGE"),
+    ),
+    ("communicationstatus", "group2", 164): (
+        TriggerRule("UPS communication status is failure", "{last()}=1", "AVERAGE"),
+    ),
+    ("batterycurrentcapacity", "group2", 66): (
+        TriggerRule(
+            "UPS battery capacity is low",
+            "{last()}<{$UPS.BATTERY.CAPACITY.MIN.WARN}",
+            "WARNING",
+            "Battery remaining capacity is below {$UPS.BATTERY.CAPACITY.MIN.WARN}%.",
+        ),
+    ),
+    ("batterybackuptime", "group2", 63): (
+        TriggerRule(
+            "UPS battery backup time is low",
+            "{last()}<{$UPS.BACKUP.TIME.MIN.WARN}",
+            "WARNING",
+            "Estimated battery backup time is below {$UPS.BACKUP.TIME.MIN.WARN} minutes.",
+        ),
+    ),
+    ("batterytemperature", "group2", 64): (
+        TriggerRule(
+            "UPS battery temperature is high",
+            "{last()}>{$UPS.BATTERY.TEMP.MAX.WARN}",
+            "AVERAGE",
+            "Battery temperature is above {$UPS.BATTERY.TEMP.MAX.WARN} degrees Celsius.",
+        ),
+    ),
+    ("localphaseaoutputloadperce", "group2", 43): (
+        TriggerRule(
+            "UPS phase A output load is high",
+            "{last()}>{$UPS.OUTPUT.LOAD.MAX.WARN}",
+            "AVERAGE",
+            "Phase A output load is above {$UPS.OUTPUT.LOAD.MAX.WARN}%.",
+        ),
+    ),
+    ("localphaseboutputloadperce", "group2", 44): (
+        TriggerRule(
+            "UPS phase B output load is high",
+            "{last()}>{$UPS.OUTPUT.LOAD.MAX.WARN}",
+            "AVERAGE",
+            "Phase B output load is above {$UPS.OUTPUT.LOAD.MAX.WARN}%.",
+        ),
+    ),
+    ("localphasecoutputloadperce", "group2", 45): (
+        TriggerRule(
+            "UPS phase C output load is high",
+            "{last()}>{$UPS.OUTPUT.LOAD.MAX.WARN}",
+            "AVERAGE",
+            "Phase C output load is above {$UPS.OUTPUT.LOAD.MAX.WARN}%.",
+        ),
+    ),
+}
 
 
 def clean_text(value: str) -> str:
@@ -409,6 +534,7 @@ def add_item(
     obj: MibObject,
     value_maps: dict[tuple[tuple[int, str], ...], str],
     duplicate_names: dict[str, int],
+    triggers: Iterable[TriggerRule] = (),
 ) -> None:
     item = sub(items_el, "item")
     item_name = obj.name
@@ -453,6 +579,17 @@ def add_item(
         sub(step, "error_handler", "ORIGINAL_ERROR")
         sub(step, "error_handler_params")
 
+    triggers = tuple(triggers)
+    if triggers:
+        triggers_el = sub(item, "triggers")
+        for rule in triggers:
+            trigger = sub(triggers_el, "trigger")
+            sub(trigger, "expression", rule.expression)
+            sub(trigger, "name", rule.name)
+            sub(trigger, "priority", rule.priority)
+            if rule.description:
+                sub(trigger, "description", rule.description)
+
 
 def add_trap_item(items_el: ET.Element, template_key: str, notification: Notification) -> None:
     item = sub(items_el, "item")
@@ -491,6 +628,20 @@ def object_key(obj: MibObject) -> tuple[str, str, int]:
     return obj.name, obj.parent, obj.subid
 
 
+def slim_triggers_for(obj: MibObject) -> tuple[TriggerRule, ...]:
+    if obj.enum == ((0, "normal"), (1, "alarm")):
+        priority = SLIM_ALARM_PRIORITIES.get(obj.name, "WARNING")
+        return (
+            TriggerRule(
+                f"UPS alarm: {obj.name}",
+                "{last()}=1",
+                priority,
+                f"MIB alarm object {obj.name} reports alarm.",
+            ),
+        )
+    return SLIM_STATUS_TRIGGERS.get(object_key(obj), ())
+
+
 def is_slim_ups_object(module: MibModule, obj: MibObject) -> bool:
     return module.identity == "eNP-UPS-ITA2" and object_key(obj) in SLIM_UPS_OBJECTS
 
@@ -508,6 +659,7 @@ def build_export(
     template_name_suffix: str = "",
     extra_description_lines: Iterable[str] = (),
     include_traps: bool = True,
+    include_slim_triggers: bool = False,
 ) -> ET.ElementTree:
     modules = list(modules)
     root = ET.Element("zabbix_export")
@@ -557,12 +709,21 @@ def build_export(
             app = sub(applications, "application")
             sub(app, "name", app_name)
 
+        if include_slim_triggers:
+            macros = sub(template, "macros")
+            for macro_name, macro_value, macro_description in SLIM_TRIGGER_MACROS:
+                macro = sub(macros, "macro")
+                sub(macro, "macro", macro_name)
+                sub(macro, "value", macro_value)
+                sub(macro, "description", macro_description)
+
         items = sub(template, "items")
         duplicate_names: dict[str, int] = {}
         for obj in objects:
             duplicate_names[obj.name] = duplicate_names.get(obj.name, 0) + 1
         for obj in objects:
-            add_item(items, template_key, obj, enum_maps, duplicate_names)
+            triggers = slim_triggers_for(obj) if include_slim_triggers else ()
+            add_item(items, template_key, obj, enum_maps, duplicate_names, triggers)
         if include_traps:
             for notification in module.notifications:
                 add_trap_item(items, template_key, notification)
@@ -604,6 +765,7 @@ def main() -> int:
                 "Slim UPS-only profile: identification, input/output electrical metrics, battery metrics, power state, communication state, and core UPS alarms.",
                 "Write/control MIB objects and non-UPS ENV/RDU objects are intentionally excluded.",
             ],
+            include_slim_triggers=True,
         )
         slim_out_path = base / SLIM_UPS_OUT_FILE
         slim_tree.write(slim_out_path, encoding="utf-8", xml_declaration=True)

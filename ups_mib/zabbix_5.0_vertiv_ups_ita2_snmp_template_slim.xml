@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2026-05-29T06:46:45Z</date>
+    <date>2026-05-29T06:58:30Z</date>
     <groups>
         <group>
             <name>Templates/SNMP devices</name>
@@ -48,6 +48,33 @@ Write/control MIB objects and non-UPS ENV/RDU objects are intentionally excluded
                     <name>Traps</name>
                 </application>
             </applications>
+            <macros>
+                <macro>
+                    <macro>{$UPS.NODATA.TIME}</macro>
+                    <value>10m</value>
+                    <description>Time without SNMP data before reporting that UPS polling is unavailable.</description>
+                </macro>
+                <macro>
+                    <macro>{$UPS.BATTERY.CAPACITY.MIN.WARN}</macro>
+                    <value>20</value>
+                    <description>Warning threshold for remaining battery capacity, in percent.</description>
+                </macro>
+                <macro>
+                    <macro>{$UPS.BACKUP.TIME.MIN.WARN}</macro>
+                    <value>10</value>
+                    <description>Warning threshold for estimated battery backup time, in minutes.</description>
+                </macro>
+                <macro>
+                    <macro>{$UPS.BATTERY.TEMP.MAX.WARN}</macro>
+                    <value>40</value>
+                    <description>Warning threshold for battery temperature, in degrees Celsius.</description>
+                </macro>
+                <macro>
+                    <macro>{$UPS.OUTPUT.LOAD.MAX.WARN}</macro>
+                    <value>90</value>
+                    <description>Warning threshold for output load, in percent.</description>
+                </macro>
+            </macros>
             <items>
                 <item>
                     <name>identManufacturer</name>
@@ -86,6 +113,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.1.2.0</description>
                             <name>Identification</name>
                         </application>
                     </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{nodata({$UPS.NODATA.TIME})}=1</expression>
+                            <name>UPS SNMP data is not available</name>
+                            <priority>AVERAGE</priority>
+                            <description>No SNMP data has been received from the UPS for the configured interval.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>phaseainputvoltage</name>
@@ -830,6 +865,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.43.0</description>
                             <error_handler_params />
                         </step>
                     </preprocessing>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;{$UPS.OUTPUT.LOAD.MAX.WARN}</expression>
+                            <name>UPS phase A output load is high</name>
+                            <priority>AVERAGE</priority>
+                            <description>Phase A output load is above {$UPS.OUTPUT.LOAD.MAX.WARN}%.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>localphaseboutputloadperce</name>
@@ -858,6 +901,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.44.0</description>
                             <error_handler_params />
                         </step>
                     </preprocessing>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;{$UPS.OUTPUT.LOAD.MAX.WARN}</expression>
+                            <name>UPS phase B output load is high</name>
+                            <priority>AVERAGE</priority>
+                            <description>Phase B output load is above {$UPS.OUTPUT.LOAD.MAX.WARN}%.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>localphasecoutputloadperce</name>
@@ -886,6 +937,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.45.0</description>
                             <error_handler_params />
                         </step>
                     </preprocessing>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;{$UPS.OUTPUT.LOAD.MAX.WARN}</expression>
+                            <name>UPS phase C output load is high</name>
+                            <priority>AVERAGE</priority>
+                            <description>Phase C output load is above {$UPS.OUTPUT.LOAD.MAX.WARN}%.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>upsrunningtime</name>
@@ -1026,6 +1085,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.63.0</description>
                             <error_handler_params />
                         </step>
                     </preprocessing>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&lt;{$UPS.BACKUP.TIME.MIN.WARN}</expression>
+                            <name>UPS battery backup time is low</name>
+                            <priority>WARNING</priority>
+                            <description>Estimated battery backup time is below {$UPS.BACKUP.TIME.MIN.WARN} minutes.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>batterytemperature</name>
@@ -1054,6 +1121,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.64.0</description>
                             <error_handler_params />
                         </step>
                     </preprocessing>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;{$UPS.BATTERY.TEMP.MAX.WARN}</expression>
+                            <name>UPS battery temperature is high</name>
+                            <priority>AVERAGE</priority>
+                            <description>Battery temperature is above {$UPS.BATTERY.TEMP.MAX.WARN} degrees Celsius.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>batterycurrentcapacity</name>
@@ -1082,6 +1157,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.66.0</description>
                             <error_handler_params />
                         </step>
                     </preprocessing>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&lt;{$UPS.BATTERY.CAPACITY.MIN.WARN}</expression>
+                            <name>UPS battery capacity is low</name>
+                            <priority>WARNING</priority>
+                            <description>Battery remaining capacity is below {$UPS.BATTERY.CAPACITY.MIN.WARN}%.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>inputpower</name>
@@ -1160,6 +1243,23 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.70.0</description>
                     <valuemap>
                         <name>Vertiv enum c2fdf878</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=0</expression>
+                            <name>UPS power supply is shut down</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                        <trigger>
+                            <expression>{last()}=2</expression>
+                            <name>UPS power supply is on battery</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                        <trigger>
+                            <expression>{last()}=3</expression>
+                            <name>UPS power supply is on bypass</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>inputpowerstatus</name>
@@ -1182,6 +1282,18 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.71.0</description>
                     <valuemap>
                         <name>Vertiv enum 80e041e2</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS input power is on battery</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                        <trigger>
+                            <expression>{last()}=3</expression>
+                            <name>UPS input power is shut down</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>batterystatus</name>
@@ -1204,6 +1316,23 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.72.0</description>
                     <valuemap>
                         <name>Vertiv enum a7fabbc0</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=3</expression>
+                            <name>UPS battery is discharging</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                        <trigger>
+                            <expression>{last()}=4</expression>
+                            <name>UPS battery is in self-test</name>
+                            <priority>INFO</priority>
+                        </trigger>
+                        <trigger>
+                            <expression>{last()}=5</expression>
+                            <name>UPS battery is missing</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>chargerstatus</name>
@@ -1226,6 +1355,13 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.74.0</description>
                     <valuemap>
                         <name>Vertiv enum 2f41a165</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS charger is off</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>parallelsystempowerstate</name>
@@ -1248,6 +1384,23 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.75.0</description>
                     <valuemap>
                         <name>Vertiv enum 8e93cf6b</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS parallel system is on battery</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                        <trigger>
+                            <expression>{last()}=2</expression>
+                            <name>UPS parallel system is on bypass</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                        <trigger>
+                            <expression>{last()}=3</expression>
+                            <name>UPS parallel system is shut down</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>ineernetworkconnectionstatus</name>
@@ -1270,6 +1423,13 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.76.0</description>
                     <valuemap>
                         <name>Vertiv enum 44b52aea</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS internal network is disconnected</name>
+                            <priority>AVERAGE</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>inputabnormal</name>
@@ -1292,6 +1452,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.79.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: inputabnormal</name>
+                            <priority>AVERAGE</priority>
+                            <description>MIB alarm object inputabnormal reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>systemovertemp</name>
@@ -1314,6 +1482,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.80.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: systemovertemp</name>
+                            <priority>HIGH</priority>
+                            <description>MIB alarm object systemovertemp reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>systembatterylowprewarning</name>
@@ -1336,6 +1512,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.81.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: systembatterylowprewarning</name>
+                            <priority>WARNING</priority>
+                            <description>MIB alarm object systembatterylowprewarning reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>rectifieroverload</name>
@@ -1358,6 +1542,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.85.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: rectifieroverload</name>
+                            <priority>AVERAGE</priority>
+                            <description>MIB alarm object rectifieroverload reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>inverteroverload</name>
@@ -1380,6 +1572,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.87.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: inverteroverload</name>
+                            <priority>AVERAGE</priority>
+                            <description>MIB alarm object inverteroverload reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>outputdisabled</name>
@@ -1402,6 +1602,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.90.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: outputdisabled</name>
+                            <priority>HIGH</priority>
+                            <description>MIB alarm object outputdisabled reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>bypassabnormal</name>
@@ -1424,6 +1632,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.91.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: bypassabnormal</name>
+                            <priority>AVERAGE</priority>
+                            <description>MIB alarm object bypassabnormal reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>bypassovercurrent</name>
@@ -1446,6 +1662,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.94.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: bypassovercurrent</name>
+                            <priority>AVERAGE</priority>
+                            <description>MIB alarm object bypassovercurrent reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>batterylowprewarning</name>
@@ -1468,6 +1692,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.97.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: batterylowprewarning</name>
+                            <priority>WARNING</priority>
+                            <description>MIB alarm object batterylowprewarning reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>batteryvoltabnormal</name>
@@ -1490,6 +1722,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.98.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: batteryvoltabnormal</name>
+                            <priority>AVERAGE</priority>
+                            <description>MIB alarm object batteryvoltabnormal reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>nobattery</name>
@@ -1512,6 +1752,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.99.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: nobattery</name>
+                            <priority>HIGH</priority>
+                            <description>MIB alarm object nobattery reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>batteryovertemp</name>
@@ -1534,6 +1782,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.100.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: batteryovertemp</name>
+                            <priority>HIGH</priority>
+                            <description>MIB alarm object batteryovertemp reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>batteryaging</name>
@@ -1556,6 +1812,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.101.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: batteryaging</name>
+                            <priority>WARNING</priority>
+                            <description>MIB alarm object batteryaging reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>batterytestfailure</name>
@@ -1578,6 +1842,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.102.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: batterytestfailure</name>
+                            <priority>WARNING</priority>
+                            <description>MIB alarm object batterytestfailure reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>fanfailure</name>
@@ -1600,6 +1872,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.104.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: fanfailure</name>
+                            <priority>AVERAGE</priority>
+                            <description>MIB alarm object fanfailure reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>lossofredundancy</name>
@@ -1622,6 +1902,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.109.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: lossofredundancy</name>
+                            <priority>AVERAGE</priority>
+                            <description>MIB alarm object lossofredundancy reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>systemoverload</name>
@@ -1644,6 +1932,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.110.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: systemoverload</name>
+                            <priority>AVERAGE</priority>
+                            <description>MIB alarm object systemoverload reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>batterymode</name>
@@ -1666,6 +1962,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.115.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: batterymode</name>
+                            <priority>WARNING</priority>
+                            <description>MIB alarm object batterymode reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>bypassmode</name>
@@ -1688,6 +1992,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.116.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: bypassmode</name>
+                            <priority>WARNING</priority>
+                            <description>MIB alarm object bypassmode reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>inverterfault</name>
@@ -1710,6 +2022,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.122.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: inverterfault</name>
+                            <priority>HIGH</priority>
+                            <description>MIB alarm object inverterfault reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>outputshortcircuit</name>
@@ -1732,6 +2052,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.127.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: outputshortcircuit</name>
+                            <priority>HIGH</priority>
+                            <description>MIB alarm object outputshortcircuit reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>outputoffandvoltageisnotz</name>
@@ -1754,6 +2082,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.128.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: outputoffandvoltageisnotz</name>
+                            <priority>WARNING</priority>
+                            <description>MIB alarm object outputoffandvoltageisnotz reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>systemfault</name>
@@ -1776,6 +2112,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.155.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: systemfault</name>
+                            <priority>HIGH</priority>
+                            <description>MIB alarm object systemfault reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>batteryeod</name>
@@ -1798,6 +2142,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.156.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: batteryeod</name>
+                            <priority>HIGH</priority>
+                            <description>MIB alarm object batteryeod reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>upshasnooutput</name>
@@ -1820,6 +2172,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.158.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: upshasnooutput</name>
+                            <priority>HIGH</priority>
+                            <description>MIB alarm object upshasnooutput reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>systemwarning</name>
@@ -1842,6 +2202,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.160.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: systemwarning</name>
+                            <priority>WARNING</priority>
+                            <description>MIB alarm object systemwarning reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>outputvoltageabnormal</name>
@@ -1864,6 +2232,14 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.161.0</description>
                     <valuemap>
                         <name>Vertiv enum 244cb395</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS alarm: outputvoltageabnormal</name>
+                            <priority>AVERAGE</priority>
+                            <description>MIB alarm object outputvoltageabnormal reports alarm.</description>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>communicationstatus</name>
@@ -1886,6 +2262,13 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.164.0</description>
                     <valuemap>
                         <name>Vertiv enum 71efbb87</name>
                     </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>UPS communication status is failure</name>
+                            <priority>AVERAGE</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>SNMP trap: systemAlarmTrapFormatDefine</name>
