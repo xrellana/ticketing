@@ -1,2 +1,5 @@
 # Local Antigravity CLI state
 .antigravitycli/
+
+# Python cache
+__pycache__/
