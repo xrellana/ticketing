@@ -17,6 +17,7 @@ ENTERPRISES_OID = (1, 3, 6, 1, 4, 1)
 GROUP_NAME = "Templates/SNMP devices"
 OUT_FILE = "zabbix_5.0_vertiv_enp_snmp_templates.xml"
 SLIM_UPS_OUT_FILE = "zabbix_5.0_vertiv_ups_ita2_snmp_template_slim.xml"
+MAX_VALUE_MAP_NAME_LEN = 60
 
 SLIM_UPS_OBJECTS = {
     ("identManufacturer", "ident", 1),
@@ -335,9 +336,12 @@ def parse_mib(path: Path) -> MibModule:
 
 
 def enum_map_name(enum: tuple[tuple[int, str], ...]) -> str:
-    labels = "_".join(slug(label) for _, label in enum[:4])
     digest = hashlib.sha1(repr(enum).encode("utf-8")).hexdigest()[:8]
-    return f"Vertiv enum {labels}_{digest}"[:128]
+    labels = "_".join(slug(label) for _, label in enum)
+    prefix = "Vertiv enum "
+    label_len = MAX_VALUE_MAP_NAME_LEN - len(prefix) - len(digest) - 1
+    label_part = labels[:label_len].rstrip("_") or "map"
+    return f"{prefix}{label_part}_{digest}"
 
 
 def value_type(obj: MibObject) -> str:

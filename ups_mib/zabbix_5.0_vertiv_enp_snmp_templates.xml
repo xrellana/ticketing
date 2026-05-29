@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2026-05-29T06:32:52Z</date>
+    <date>2026-05-29T06:38:46Z</date>
     <groups>
         <group>
             <name>Templates/SNMP devices</name>
@@ -115,7 +115,7 @@ Numeric OID: .1.3.6.1.4.1.13400.2.503.2.2.1.0</description>
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum temphumsensor_tempsensor_4digitalinputsensor_invalidequip_2658642b</name>
+                        <name>Vertiv enum temphumsensor_tempsensor_4digitalinputs_2658642b</name>
                     </valuemap>
                 </item>
                 <item>
@@ -237,7 +237,7 @@ Numeric OID: .1.3.6.1.4.1.13400.2.503.2.2.6.0</description>
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum temphumsensor_tempsensor_4digitalinputsensor_invalidequip_2658642b</name>
+                        <name>Vertiv enum temphumsensor_tempsensor_4digitalinputs_2658642b</name>
                     </valuemap>
                 </item>
                 <item>
@@ -359,7 +359,7 @@ Numeric OID: .1.3.6.1.4.1.13400.2.503.2.2.11.0</description>
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum temphumsensor_tempsensor_4digitalinputsensor_invalidequip_2658642b</name>
+                        <name>Vertiv enum temphumsensor_tempsensor_4digitalinputs_2658642b</name>
                     </valuemap>
                 </item>
                 <item>
@@ -481,7 +481,7 @@ Numeric OID: .1.3.6.1.4.1.13400.2.503.2.2.16.0</description>
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum temphumsensor_tempsensor_4digitalinputsensor_invalidequip_2658642b</name>
+                        <name>Vertiv enum temphumsensor_tempsensor_4digitalinputs_2658642b</name>
                     </valuemap>
                 </item>
                 <item>
@@ -603,7 +603,7 @@ Numeric OID: .1.3.6.1.4.1.13400.2.503.2.2.21.0</description>
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum temphumsensor_tempsensor_4digitalinputsensor_invalidequip_2658642b</name>
+                        <name>Vertiv enum temphumsensor_tempsensor_4digitalinputs_2658642b</name>
                     </valuemap>
                 </item>
                 <item>
@@ -713,7 +713,7 @@ Numeric OID: .1.3.6.1.4.1.13400.2.503.2.2.26.0</description>
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum temphumsensor_tempsensor_4digitalinputsensor_invalidequip_2658642b</name>
+                        <name>Vertiv enum temphumsensor_tempsensor_4digitalinputs_2658642b</name>
                     </valuemap>
                 </item>
                 <item>
@@ -846,7 +846,7 @@ MIB MAX-ACCESS is read-write; this template only polls it with SNMP GET.</descri
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum door1di1_door2di2_waterdi3_smokedi4_877fe14d</name>
+                        <name>Vertiv enum door1di1_door2di2_waterdi3_smokedi4_all_877fe14d</name>
                     </valuemap>
                 </item>
                 <item>
@@ -869,7 +869,7 @@ MIB MAX-ACCESS is read-write; this template only polls it with SNMP GET.</descri
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum door1di1_door2di2_waterdi3_smokedi4_877fe14d</name>
+                        <name>Vertiv enum door1di1_door2di2_waterdi3_smokedi4_all_877fe14d</name>
                     </valuemap>
                 </item>
                 <item>
@@ -3795,7 +3795,7 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.70.0</description>
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum upsshutdown_utilityonline_onbattery_onbypass_c2fdf878</name>
+                        <name>Vertiv enum upsshutdown_utilityonline_onbattery_onb_c2fdf878</name>
                     </valuemap>
                 </item>
                 <item>
@@ -3817,7 +3817,7 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.71.0</description>
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum utilityonline_onbattery_upsonunionmode_upsshutdown_80e041e2</name>
+                        <name>Vertiv enum utilityonline_onbattery_upsonunionmode_80e041e2</name>
                     </valuemap>
                 </item>
                 <item>
@@ -3839,7 +3839,7 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.72.0</description>
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum nondischargeandnonrechargeable_floatcharging_equalizationcharging_discharging_a7fabbc0</name>
+                        <name>Vertiv enum nondischargeandnonrechargeable_floatcha_a7fabbc0</name>
                     </valuemap>
                 </item>
                 <item>
@@ -3861,7 +3861,7 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.73.0</description>
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum nondischargeandnonrechargeable_floatcharging_equalizationcharging_discharging_a7fabbc0</name>
+                        <name>Vertiv enum nondischargeandnonrechargeable_floatcha_a7fabbc0</name>
                     </valuemap>
                 </item>
                 <item>
@@ -3905,7 +3905,7 @@ Numeric OID: .1.3.6.1.4.1.13400.2.4067.2.2.75.0</description>
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum maininverterpowersupply_onbattery_onbypass_upsshutdown_8e93cf6b</name>
+                        <name>Vertiv enum maininverterpowersupply_onbattery_onbyp_8e93cf6b</name>
                     </valuemap>
                 </item>
                 <item>
@@ -6122,7 +6122,7 @@ MIB MAX-ACCESS is read-write; this template only polls it with SNMP GET.</descri
                         </application>
                     </applications>
                     <valuemap>
-                        <name>Vertiv enum forbidden_8weeks_12weeks_16weeks_51a7db12</name>
+                        <name>Vertiv enum forbidden_8weeks_12weeks_16weeks_20week_51a7db12</name>
                     </valuemap>
                 </item>
                 <item>
@@ -6305,7 +6305,7 @@ Notification OID: .1.3.6.1.4.1.13400.2.4067.4.1</description>
             </mappings>
         </value_map>
         <value_map>
-            <name>Vertiv enum door1di1_door2di2_waterdi3_smokedi4_877fe14d</name>
+            <name>Vertiv enum door1di1_door2di2_waterdi3_smokedi4_all_877fe14d</name>
             <mappings>
                 <mapping>
                     <value>0</value>
@@ -6330,7 +6330,7 @@ Notification OID: .1.3.6.1.4.1.13400.2.4067.4.1</description>
             </mappings>
         </value_map>
         <value_map>
-            <name>Vertiv enum forbidden_8weeks_12weeks_16weeks_51a7db12</name>
+            <name>Vertiv enum forbidden_8weeks_12weeks_16weeks_20week_51a7db12</name>
             <mappings>
                 <mapping>
                     <value>0</value>
@@ -6372,7 +6372,7 @@ Notification OID: .1.3.6.1.4.1.13400.2.4067.4.1</description>
             </mappings>
         </value_map>
         <value_map>
-            <name>Vertiv enum maininverterpowersupply_onbattery_onbypass_upsshutdown_8e93cf6b</name>
+            <name>Vertiv enum maininverterpowersupply_onbattery_onbyp_8e93cf6b</name>
             <mappings>
                 <mapping>
                     <value>0</value>
@@ -6406,7 +6406,7 @@ Notification OID: .1.3.6.1.4.1.13400.2.4067.4.1</description>
             </mappings>
         </value_map>
         <value_map>
-            <name>Vertiv enum nondischargeandnonrechargeable_floatcharging_equalizationcharging_discharging_a7fabbc0</name>
+            <name>Vertiv enum nondischargeandnonrechargeable_floatcha_a7fabbc0</name>
             <mappings>
                 <mapping>
                     <value>0</value>
@@ -6606,7 +6606,7 @@ Notification OID: .1.3.6.1.4.1.13400.2.4067.4.1</description>
             </mappings>
         </value_map>
         <value_map>
-            <name>Vertiv enum temphumsensor_tempsensor_4digitalinputsensor_invalidequip_2658642b</name>
+            <name>Vertiv enum temphumsensor_tempsensor_4digitalinputs_2658642b</name>
             <mappings>
                 <mapping>
                     <value>0</value>
@@ -6661,7 +6661,7 @@ Notification OID: .1.3.6.1.4.1.13400.2.4067.4.1</description>
             </mappings>
         </value_map>
         <value_map>
-            <name>Vertiv enum upsshutdown_utilityonline_onbattery_onbypass_c2fdf878</name>
+            <name>Vertiv enum upsshutdown_utilityonline_onbattery_onb_c2fdf878</name>
             <mappings>
                 <mapping>
                     <value>0</value>
@@ -6686,7 +6686,7 @@ Notification OID: .1.3.6.1.4.1.13400.2.4067.4.1</description>
             </mappings>
         </value_map>
         <value_map>
-            <name>Vertiv enum utilityonline_onbattery_upsonunionmode_upsshutdown_80e041e2</name>
+            <name>Vertiv enum utilityonline_onbattery_upsonunionmode_80e041e2</name>
             <mappings>
                 <mapping>
                     <value>0</value>
