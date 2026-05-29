@@ -1,0 +1,287 @@
+------------------------------------------------------------
+-- Vertiv 
+-- RDU-SIC G2 Device MIB. 
+-- Using Generate Template V1.0
+-- Copyright 2008-2015 Vertiv Corporation.
+-- All rights reserved.
+------------------------------------------------------------
+
+eNP-RDU-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE,Integer32, Counter32, enterprises	
+		FROM SNMPv2-SMI
+	TEXTUAL-CONVENTION, DisplayString, DateAndTime
+		FROM SNMPv2-TC;
+	
+------------------------------------------------------------
+-- Node definitions
+------------------------------------------------------------
+enp OBJECT IDENTIFIER ::= { enterprises 13400 }
+	
+products OBJECT IDENTIFIER ::= { enp 1 }
+
+eNP-RDU MODULE-IDENTITY
+	LAST-UPDATED "201309020955Z"
+	ORGANIZATION "Vertiv"
+	CONTACT-INFO "Vertiv"
+	REVISION     "170"
+	DESCRIPTION  "Vertiv For RDU-SIC G2 MIB."
+	::= { products 100 }
+
+------------------------------------------------------------
+-- Textual conventions
+------------------------------------------------------------
+
+AlarmSeverity ::= TEXTUAL-CONVENTION
+	STATUS current
+	DESCRIPTION "
+		The severity of the alarm. One of
+		(1) informational
+		(2) warning
+		(3) critical"
+	SYNTAX INTEGER {
+		informational(1),
+		warning(2),
+		critical(3) }
+		
+AlarmStatusChange ::= TEXTUAL-CONVENTION
+	STATUS current
+	DESCRIPTION "
+		Indicates 'activated' (0) or 'deactivated' (1) alarm events."
+	SYNTAX INTEGER {
+		activated(0),
+		deactivated(1) }
+
+------------------------------------------------------------
+-- 1.1 Identification of the device { eNP-RDU 1 }
+------------------------------------------------------------
+
+ident OBJECT IDENTIFIER ::= { eNP-RDU 1 }
+															
+identManufacturer OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		The name of the device manufacturer."
+	::= { ident 1 }
+
+identModel OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		The manufacturers model designation of the device."
+	::= { ident 2 }
+	
+identIndex OBJECT-TYPE
+	SYNTAX Integer32
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "
+		The sequence number of the device."
+	::= { ident 3 }
+
+------------------------------------------------------------
+-- 1.2 system values { eNP-RDU 2 }
+------------------------------------------------------------
+system OBJECT IDENTIFIER ::= { eNP-RDU 2 }
+	
+		
+		
+
+------------------------------------------------------------
+--gourp2
+------------------------------------------------------------
+group2 OBJECT IDENTIFIER ::= { system 2 }
+systemstatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemstatus, status."
+		::= { group2 1}
+ OBJECT-TYPE
+		SYNTAX INTEGER {
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		", status."
+		::= { group2 2}
+runningconfigtype OBJECT-TYPE
+		SYNTAX INTEGER {
+			normalconfig(0),
+			backupconfig(1),
+			defaultconfig(2)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"runningconfigtype, status."
+		::= { group2 3}
+
+------------------------------------------------------------
+--gourp3
+------------------------------------------------------------
+group3 OBJECT IDENTIFIER ::= { system 3 }
+automanstate OBJECT-TYPE
+		SYNTAX INTEGER {
+			auto(0),
+			manual(1)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"automanstate, status."
+		::= { group3 4}
+outgoingalarmblocked OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			blocked(1)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"outgoingalarmblocked, status."
+		::= { group3 5}
+datastatstartoclock OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"datastatstartoclock, stored as 1oclock."
+		::= { group3 6}
+datastatperiod OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"datastatperiod, stored as 1h."
+		::= { group3 7}
+------------------------------------------------------------
+-- 3 Alarm trap table 
+-- If you want to know the equipment trap list detail,
+-- Please find a Excel file named "RDU-SIC G2 trap table";
+------------------------------------------------------------
+
+alarmTrapTable OBJECT-TYPE
+	SYNTAX SEQUENCE OF AlarmTrapEntry
+	MAX-ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "
+		Table holding information about the submitted alarm traps."
+	::= { eNP-RDU  3 }
+
+alarmTrapEntry OBJECT-TYPE
+	SYNTAX AlarmTrapEntry
+	MAX-ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "
+		An entry (conceptual row) in the alarmTrapTable."
+	INDEX { alarmIndex }
+	::= { alarmTrapTable 1 }
+
+AlarmTrapEntry ::= SEQUENCE {
+	alarmIndex Counter32,
+	alarmTime DisplayString,
+	alarmStatusChange StatusChange,
+	alarmSeverity Status,
+	alarmDescription DisplayString,
+	alarmId Integer32 }
+
+alarmIndex OBJECT-TYPE
+	SYNTAX Counter32
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		The unique sequence number of this alarm trap."
+	::= { alarmTrapEntry 1 }
+
+alarmTime OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		Date and time when event occured."
+	::= { alarmTrapEntry 2 }
+
+alarmStatusChange OBJECT-TYPE
+	SYNTAX StatusChange
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		Indicates 'activated' (0) or 'deactivated' (1) alarm events."
+	::= { alarmTrapEntry 3 }
+
+alarmSeverity OBJECT-TYPE
+	SYNTAX Status
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		The severity of the alarm. One of
+		(0) informational
+		(1) warning
+		(2) critical"
+	::= { alarmTrapEntry 4 }
+	
+alarmDescription OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		Free-text description of alarm."
+	::= { alarmTrapEntry 5 }
+	
+alarmId OBJECT-TYPE
+	SYNTAX Integer32
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		Alarm Index in system."
+	::= { alarmTrapEntry 6 }
+
+	
+	
+------------------------------------------------------------
+-- System Alarm Trap Define
+------------------------------------------------------------
+
+systemAlarmTrap OBJECT IDENTIFIER ::= { eNP-RDU 4 }
+
+systemAlarmTrapFormatDefine NOTIFICATION-TYPE
+	OBJECTS {
+		systemAlarmIndex,
+		systemAlarmTime,
+		systemAlarmStatusChange,
+		systemAlarmSeverity,
+		systemAlarmDescription,
+		systemAlarmId,
+		systemAlarmEquipId,
+		systemAlarmEquipTypeId }
+	STATUS current
+	DESCRIPTION "
+		An alarm trap is sent when an alarm occurs (activated) or
+		returns to normal state (deactivated). Alarm traps are logged
+		in alarmTrapTable. Variables in this trap:
+		* systemAlarmIndex - The unique sequence number of this alarm trap.
+		* systemAlarmTime - Date and time when event occured (local time).
+		* systemAlarmStatusChange - (0) activated or (1) deactivated.
+		* systemAlarmSeverity - The severity of the alarm..
+		* systemAlarmId - Alarm id.
+		* systemAlarmEquipId - Alarm equipment id.
+		* systemAlarmEquipTypeId - Alarm equipment type id."
+	::= { systemAlarmTrap 1 }
+	
+	
+------------------------------------------------------------
+-- End of MIB definitions
+------------------------------------------------------------
+END
+

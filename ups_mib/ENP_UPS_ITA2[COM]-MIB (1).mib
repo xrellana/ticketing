@@ -1,0 +1,1881 @@
+------------------------------------------------------------
+-- Vertiv 
+-- RDU-SIC G2 Device MIB. 
+-- Using Generate Template V1.0
+-- Copyright 2008-2015 Vertiv Corporation.
+-- All rights reserved.
+------------------------------------------------------------
+
+eNP-UPS-ITA2-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE,Integer32, Counter32, enterprises	
+		FROM SNMPv2-SMI
+	TEXTUAL-CONVENTION, DisplayString, DateAndTime
+		FROM SNMPv2-TC;
+	
+------------------------------------------------------------
+-- Node definitions
+------------------------------------------------------------
+enp OBJECT IDENTIFIER ::= { enterprises 13400 }
+	
+products OBJECT IDENTIFIER ::= { enp 2 }
+
+eNP-UPS-ITA2 MODULE-IDENTITY
+	LAST-UPDATED "201309020955Z"
+	ORGANIZATION "Vertiv"
+	CONTACT-INFO "Vertiv"
+	REVISION     "200"
+	DESCRIPTION  "Vertiv For RDU-SIC G2 MIB."
+	::= { products 4067 }
+
+------------------------------------------------------------
+-- Textual conventions
+------------------------------------------------------------
+
+AlarmSeverity ::= TEXTUAL-CONVENTION
+	STATUS current
+	DESCRIPTION "
+		The severity of the alarm. One of
+		(1) informational
+		(2) warning
+		(3) critical"
+	SYNTAX INTEGER {
+		informational(1),
+		warning(2),
+		critical(3) }
+		
+AlarmStatusChange ::= TEXTUAL-CONVENTION
+	STATUS current
+	DESCRIPTION "
+		Indicates 'activated' (0) or 'deactivated' (1) alarm events."
+	SYNTAX INTEGER {
+		activated(0),
+		deactivated(1) }
+
+------------------------------------------------------------
+-- 1.1 Identification of the device { eNP-UPS-ITA2 1 }
+------------------------------------------------------------
+
+ident OBJECT IDENTIFIER ::= { eNP-UPS-ITA2 1 }
+															
+identManufacturer OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		The name of the device manufacturer."
+	::= { ident 1 }
+
+identModel OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		The manufacturers model designation of the device."
+	::= { ident 2 }
+	
+identIndex OBJECT-TYPE
+	SYNTAX Integer32
+	MAX-ACCESS read-write
+	STATUS current
+	DESCRIPTION "
+		The sequence number of the device."
+	::= { ident 3 }
+
+------------------------------------------------------------
+-- 1.2 system values { eNP-UPS-ITA2 2 }
+------------------------------------------------------------
+system OBJECT IDENTIFIER ::= { eNP-UPS-ITA2 2 }
+	
+		
+		
+
+------------------------------------------------------------
+--gourp2
+------------------------------------------------------------
+group2 OBJECT IDENTIFIER ::= { system 2 }
+phaseainputvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phaseainputvoltage, stored as 0.1V."
+		::= { group2 2}
+phasebinputvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phasebinputvoltage, stored as 0.1V."
+		::= { group2 3}
+phasecinputvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phasecinputvoltage, stored as 0.1V."
+		::= { group2 4}
+phaseaoutputvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phaseaoutputvoltage, stored as 0.1V."
+		::= { group2 5}
+phaseboutputvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phaseboutputvoltage, stored as 0.1V."
+		::= { group2 6}
+phasecoutputvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phasecoutputvoltage, stored as 0.1V."
+		::= { group2 7}
+phaseaoutputcurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phaseaoutputcurrent, stored as 0.1A."
+		::= { group2 8}
+phaseboutputcurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phaseboutputcurrent, stored as 0.1A."
+		::= { group2 9}
+phasecoutputcurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phasecoutputcurrent, stored as 0.1A."
+		::= { group2 10}
+outputfrequency OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"outputfrequency, stored as 0.1HZ."
+		::= { group2 11}
+inputphasenumber OBJECT-TYPE
+		SYNTAX INTEGER {
+			unknown(0),
+			simplex(1),
+			duplex(2),
+			threephase(3)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inputphasenumber, status."
+		::= { group2 12}
+lineabinputvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"lineabinputvoltage, stored as 0.1V."
+		::= { group2 13}
+linebcinputvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"linebcinputvoltage, stored as 0.1V."
+		::= { group2 14}
+linecainputvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"linecainputvoltage, stored as 0.1V."
+		::= { group2 15}
+phaseainputcurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phaseainputcurrent, stored as 0.1A."
+		::= { group2 16}
+phasebinputcurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phasebinputcurrent, stored as 0.1A."
+		::= { group2 17}
+phasecinputcurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phasecinputcurrent, stored as 0.1A."
+		::= { group2 18}
+systeminputfrequency OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systeminputfrequency, stored as 0.1HZ."
+		::= { group2 19}
+phaseainputpowerfactor OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phaseainputpowerfactor, stored as 0.1."
+		::= { group2 20}
+phasebinputpowerfactor OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phasebinputpowerfactor, stored as 0.1."
+		::= { group2 21}
+phasecinputpowerfactor OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phasecinputpowerfactor, stored as 0.1."
+		::= { group2 22}
+bypassavoltagea OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypassavoltagea, stored as 0.1V."
+		::= { group2 23}
+bypassbvoltageb OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypassbvoltageb, stored as 0.1V."
+		::= { group2 24}
+bypasscvoltagec OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypasscvoltagec, stored as 0.1V."
+		::= { group2 25}
+bypasslineabvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypasslineabvoltage, stored as 0.1V."
+		::= { group2 26}
+bypasslinebcvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypasslinebcvoltage, stored as 0.1V."
+		::= { group2 27}
+bypasslinecavoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypasslinecavoltage, stored as 0.1V."
+		::= { group2 28}
+bypassfrequency OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypassfrequency, stored as 0.1HZ."
+		::= { group2 29}
+outputphasenumber OBJECT-TYPE
+		SYNTAX INTEGER {
+			unknown(0),
+			simplex(1),
+			duplex(2),
+			threephase(3)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"outputphasenumber, status."
+		::= { group2 30}
+phaseaoutputpowerfactor OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phaseaoutputpowerfactor, stored as 0.1."
+		::= { group2 31}
+phaseboutputpowerfactor OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phaseboutputpowerfactor, stored as 0.1."
+		::= { group2 32}
+phasecoutputpowerfactor OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"phasecoutputpowerfactor, stored as 0.1."
+		::= { group2 33}
+localphaseaoutputpeakratio OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localphaseaoutputpeakratio, stored as 0.1."
+		::= { group2 34}
+localphaseboutputpeakratio OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localphaseboutputpeakratio, stored as 0.1."
+		::= { group2 35}
+localphasecoutputpeakratio OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localphasecoutputpeakratio, stored as 0.1."
+		::= { group2 36}
+localphaseaoutputactivepow OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localphaseaoutputactivepow, stored as 0.1kW."
+		::= { group2 37}
+localphaseboutputactivepow OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localphaseboutputactivepow, stored as 0.1kW."
+		::= { group2 38}
+localphasecoutputactivepow OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localphasecoutputactivepow, stored as 0.1kW."
+		::= { group2 39}
+localphaseaoutputapparentp OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localphaseaoutputapparentp, stored as 0.1KVA."
+		::= { group2 40}
+localphaseboutputapparentp OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localphaseboutputapparentp, stored as 0.1KVA."
+		::= { group2 41}
+localphasecoutputapparentp OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localphasecoutputapparentp, stored as 0.1KVA."
+		::= { group2 42}
+localphaseaoutputloadperce OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localphaseaoutputloadperce, stored as 0.1%."
+		::= { group2 43}
+localphaseboutputloadperce OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localphaseboutputloadperce, stored as 0.1%."
+		::= { group2 44}
+localphasecoutputloadperce OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localphasecoutputloadperce, stored as 0.1%."
+		::= { group2 45}
+systemphaseaoutputpowerfac OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemphaseaoutputpowerfac, stored as 0.1."
+		::= { group2 46}
+systemphaseboutputpowerfac OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemphaseboutputpowerfac, stored as 0.1."
+		::= { group2 47}
+systemphasecoutputpowerfac OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemphasecoutputpowerfac, stored as 0.1."
+		::= { group2 48}
+systemphaseaoutputactivepo OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemphaseaoutputactivepo, stored as 0.1kW."
+		::= { group2 49}
+systemphaseboutputactivepo OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemphaseboutputactivepo, stored as 0.1kW."
+		::= { group2 50}
+systemphasecoutputactivepo OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemphasecoutputactivepo, stored as 0.1kW."
+		::= { group2 51}
+systemphaseaoutputapparent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemphaseaoutputapparent, stored as 0.1KVA."
+		::= { group2 52}
+systemphaseboutputapparent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemphaseboutputapparent, stored as 0.1KVA."
+		::= { group2 53}
+systemphasecoutputapparent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemphasecoutputapparent, stored as 0.1KVA."
+		::= { group2 54}
+parallelmachinenumber OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"parallelmachinenumber, stored as 0.1."
+		::= { group2 55}
+upsrunningtime OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsrunningtime, stored as 0.1day."
+		::= { group2 56}
+batteryvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batteryvoltage, stored as 0.1V."
+		::= { group2 57}
+batterychargingcurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterychargingcurrent, stored as 0.1A."
+		::= { group2 58}
+batterydischargecurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterydischargecurrent, stored as 0.1A."
+		::= { group2 59}
+negativebatteryvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"negativebatteryvoltage, stored as 0.1V."
+		::= { group2 60}
+negativebatterychargecurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"negativebatterychargecurrent, stored as 0.1A."
+		::= { group2 61}
+negativebatterydischargecurr OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"negativebatterydischargecurr, stored as 0.1A."
+		::= { group2 62}
+batterybackuptime OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterybackuptime, stored as 0.1Min."
+		::= { group2 63}
+batterytemperature OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterytemperature, stored as 0.1degC."
+		::= { group2 64}
+ambienttemperature OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"ambienttemperature, stored as 0.1degC."
+		::= { group2 65}
+batterycurrentcapacity OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterycurrentcapacity, stored as 0.1%."
+		::= { group2 66}
+batterydischargetimes OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterydischargetimes, stored as 0.1."
+		::= { group2 67}
+inputpower OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inputpower, stored as 0.1KWH."
+		::= { group2 68}
+outputpower OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"outputpower, stored as 0.1KWH."
+		::= { group2 69}
+powersupply OBJECT-TYPE
+		SYNTAX INTEGER {
+			upsshutdown(0),
+			utilityonline(1),
+			onbattery(2),
+			onbypass(3),
+			upsonunionmode(4)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"powersupply, status."
+		::= { group2 70}
+inputpowerstatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			utilityonline(0),
+			onbattery(1),
+			upsonunionmode(2),
+			upsshutdown(3)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inputpowerstatus, status."
+		::= { group2 71}
+batterystatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			nondischargeandnonrechargeable(0),
+			floatcharging(1),
+			equalizationcharging(2),
+			discharging(3),
+			inselftest(4),
+			nobattery(5)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterystatus, status."
+		::= { group2 72}
+batterynegativegroupstatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			nondischargeandnonrechargeable(0),
+			floatcharging(1),
+			equalizationcharging(2),
+			discharging(3),
+			inselftest(4),
+			nobattery(5)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterynegativegroupstatus, status."
+		::= { group2 73}
+chargerstatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			chargeron(0),
+			chargeroff(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"chargerstatus, status."
+		::= { group2 74}
+parallelsystempowerstate OBJECT-TYPE
+		SYNTAX INTEGER {
+			maininverterpowersupply(0),
+			onbattery(1),
+			onbypass(2),
+			upsshutdown(3)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"parallelsystempowerstate, status."
+		::= { group2 75}
+ineernetworkconnectionstatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			connected(0),
+			disconnected(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"ineernetworkconnectionstatus, status."
+		::= { group2 76}
+outlet1switchstatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			turnedon(0),
+			turnedoff(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"outlet1switchstatus, status."
+		::= { group2 77}
+outlet2switchstatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			turnedon(0),
+			turnedoff(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"outlet2switchstatus, status."
+		::= { group2 78}
+inputabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inputabnormal, status."
+		::= { group2 79}
+systemovertemp OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemovertemp, status."
+		::= { group2 80}
+systembatterylowprewarning OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systembatterylowprewarning, status."
+		::= { group2 81}
+inputphasereversed OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inputphasereversed, status."
+		::= { group2 82}
+inputneutrallost OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inputneutrallost, status."
+		::= { group2 83}
+inputgroundlost OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inputgroundlost, status."
+		::= { group2 84}
+rectifieroverload OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"rectifieroverload, status."
+		::= { group2 85}
+batterycabinetnotconnected OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterycabinetnotconnected, status."
+		::= { group2 86}
+inverteroverload OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inverteroverload, status."
+		::= { group2 87}
+lbsabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"lbsabnormal, status."
+		::= { group2 88}
+outputpending OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"outputpending, status."
+		::= { group2 89}
+outputdisabled OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"outputdisabled, status."
+		::= { group2 90}
+bypassabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypassabnormal, status."
+		::= { group2 91}
+bypassabnormalinecomode OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypassabnormalinecomode, status."
+		::= { group2 92}
+bypassphasereversed OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypassphasereversed, status."
+		::= { group2 93}
+bypassovercurrent OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypassovercurrent, status."
+		::= { group2 94}
+bypasscableconnectionabnorma OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypasscableconnectionabnorma, status."
+		::= { group2 95}
+batteryreversed OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batteryreversed, status."
+		::= { group2 96}
+batterylowprewarning OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterylowprewarning, status."
+		::= { group2 97}
+batteryvoltabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batteryvoltabnormal, status."
+		::= { group2 98}
+nobattery OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"nobattery, status."
+		::= { group2 99}
+batteryovertemp OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batteryovertemp, status."
+		::= { group2 100}
+batteryaging OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batteryaging, status."
+		::= { group2 101}
+batterytestfailure OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterytestfailure, status."
+		::= { group2 102}
+batteryseriesnotqualified OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batteryseriesnotqualified, status."
+		::= { group2 103}
+fanfailure OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"fanfailure, status."
+		::= { group2 104}
+repo OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"repo, status."
+		::= { group2 105}
+inputneutralgroundabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inputneutralgroundabnormal, status."
+		::= { group2 106}
+versionincompatible OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"versionincompatible, status."
+		::= { group2 107}
+inputneutralgroundabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inputneutralgroundabnormal, status."
+		::= { group2 108}
+lossofredundancy OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"lossofredundancy, status."
+		::= { group2 109}
+systemoverload OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemoverload, status."
+		::= { group2 110}
+loadsharingabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"loadsharingabnormal, status."
+		::= { group2 111}
+systemparallelsettingsasync OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemparallelsettingsasync, status."
+		::= { group2 112}
+localparallelsettingsasync OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localparallelsettingsasync, status."
+		::= { group2 113}
+onmaintenancebypass OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"onmaintenancebypass, status."
+		::= { group2 114}
+batterymode OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterymode, status."
+		::= { group2 115}
+bypassmode OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypassmode, status."
+		::= { group2 116}
+dcbusabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"dcbusabnormal, status."
+		::= { group2 117}
+rectifierfault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"rectifierfault, status."
+		::= { group2 118}
+dcdcfault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"dcdcfault, status."
+		::= { group2 119}
+chargerfault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"chargerfault, status."
+		::= { group2 120}
+inputbackfeed OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inputbackfeed, status."
+		::= { group2 121}
+inverterfault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inverterfault, status."
+		::= { group2 122}
+inverterrelaywelded OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inverterrelaywelded, status."
+		::= { group2 123}
+bypassbackfeed OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypassbackfeed, status."
+		::= { group2 124}
+auxiliarypowerfault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"auxiliarypowerfault, status."
+		::= { group2 125}
+internalcommunicationsfault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"internalcommunicationsfault, status."
+		::= { group2 126}
+outputshortcircuit OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"outputshortcircuit, status."
+		::= { group2 127}
+outputoffandvoltageisnotz OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"outputoffandvoltageisnotz, status."
+		::= { group2 128}
+parallelcommunicationbreakdow OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"parallelcommunicationbreakdow, status."
+		::= { group2 129}
+shutoffduetoovertemp OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"shutoffduetoovertemp, status."
+		::= { group2 130}
+outputoffoverload&bypass OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"outputoffoverload&bypass, status."
+		::= { group2 131}
+loadoffduetooutputshort OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"loadoffduetooutputshort, status."
+		::= { group2 132}
+eodturnoff OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"eodturnoff, status."
+		::= { group2 133}
+remoteshutdown OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"remoteshutdown, status."
+		::= { group2 134}
+guaranteedshutdown OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"guaranteedshutdown, status."
+		::= { group2 135}
+loadoffduetoshutdownonbat OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"loadoffduetoshutdownonbat, status."
+		::= { group2 136}
+outputoffbypassunavailable OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"outputoffbypassunavailable, status."
+		::= { group2 137}
+remotepoweron OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"remotepoweron, status."
+		::= { group2 138}
+remoteshutoff OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"remoteshutoff, status."
+		::= { group2 139}
+batteryteststarted OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batteryteststarted, status."
+		::= { group2 140}
+batteryteststopped OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batteryteststopped, status."
+		::= { group2 141}
+localsettingssyncok OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"localsettingssyncok, status."
+		::= { group2 142}
+systemsettingssyncok OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemsettingssyncok, status."
+		::= { group2 143}
+batterytoutilitytransition OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterytoutilitytransition, status."
+		::= { group2 144}
+manualshutdown OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"manualshutdown, status."
+		::= { group2 145}
+operatingoninverter OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"operatingoninverter, status."
+		::= { group2 146}
+manualpoweron OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"manualpoweron, status."
+		::= { group2 147}
+batterytotalrunningtime OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterytotalrunningtime, stored as 0.1s."
+		::= { group2 148}
+batterytotaldischargingtime OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterytotaldischargingtime, stored as 0.1s."
+		::= { group2 149}
+parallelnoabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"parallelnoabnormal, status."
+		::= { group2 150}
+parallelbypasscableconnectio OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"parallelbypasscableconnectio, status."
+		::= { group2 151}
+onintelligentsleepmode OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"onintelligentsleepmode, status."
+		::= { group2 152}
+batterycabinetconnectabnorma OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batterycabinetconnectabnorma, status."
+		::= { group2 153}
+parallelcableconnectionabnor OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"parallelcableconnectionabnor, status."
+		::= { group2 154}
+systemfault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemfault, status."
+		::= { group2 155}
+batteryeod OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"batteryeod, status."
+		::= { group2 156}
+bypassdisable OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypassdisable, status."
+		::= { group2 157}
+upshasnooutput OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upshasnooutput, status."
+		::= { group2 158}
+rectifiersoftstartfail OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"rectifiersoftstartfail, status."
+		::= { group2 159}
+systemwarning OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"systemwarning, status."
+		::= { group2 160}
+outputvoltageabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"outputvoltageabnormal, status."
+		::= { group2 161}
+inputbackfeed OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"inputbackfeed, status."
+		::= { group2 162}
+bypassbackfeed OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"bypassbackfeed, status."
+		::= { group2 163}
+communicationstatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			failure(1)
+ }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"communicationstatus, status."
+		::= { group2 164}
+remotebatteryselftest OBJECT-TYPE
+		SYNTAX INTEGER {
+			start(0),
+			end(1)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"remotebatteryselftest, status."
+		::= { group2 165}
+remotemaintenancebatteryself OBJECT-TYPE
+		SYNTAX INTEGER {
+			start(0),
+			end(1)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"remotemaintenancebatteryself, status."
+		::= { group2 166}
+turnoffupsoutput OBJECT-TYPE
+		SYNTAX INTEGER {
+			no(0),
+			yes(1)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"turnoffupsoutput, status."
+		::= { group2 167}
+turnonupsinstantly OBJECT-TYPE
+		SYNTAX INTEGER {
+			yes(0)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"turnonupsinstantly, status."
+		::= { group2 168}
+turnoffupsinstantly OBJECT-TYPE
+		SYNTAX INTEGER {
+			yes(0)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"turnoffupsinstantly, status."
+		::= { group2 169}
+openinverterwithdelay OBJECT-TYPE
+		SYNTAX INTEGER {
+			yes(0)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"openinverterwithdelay, status."
+		::= { group2 170}
+closeoutputwithdelay OBJECT-TYPE
+		SYNTAX INTEGER {
+			yes(0)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"closeoutputwithdelay, status."
+		::= { group2 171}
+delayedshutdowncancellation OBJECT-TYPE
+		SYNTAX INTEGER {
+			yes(0)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"delayedshutdowncancellation, status."
+		::= { group2 172}
+delaytimeofselfstart OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"delaytimeofselfstart, stored as 1Sec."
+		::= { group2 173}
+delaytimeofremoteshutdown OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"delaytimeofremoteshutdown, stored as 1Sec."
+		::= { group2 174}
+intervalofbatteryselftest OBJECT-TYPE
+		SYNTAX INTEGER {
+			forbidden(0),
+			8weeks(1),
+			12weeks(2),
+			16weeks(3),
+			20weeks(4),
+			26weeks(5)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"intervalofbatteryselftest, status."
+		::= { group2 175}
+upsworkingmode OBJECT-TYPE
+		SYNTAX INTEGER {
+			normalmode(0),
+			ecomode(1)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"upsworkingmode, status."
+		::= { group2 176}
+selfstartsetting OBJECT-TYPE
+		SYNTAX INTEGER {
+			forbidden(0),
+			allow(1)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"selfstartsetting, status."
+		::= { group2 177}
+settingsredundance OBJECT-TYPE
+		SYNTAX INTEGER {
+			no(0),
+			yes(1)
+ }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"settingsredundance, status."
+		::= { group2 178}
+remoteopendelaytime OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"remoteopendelaytime, stored as 1Sec."
+		::= { group2 179}
+lognumberset OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"lognumberset, stored as 1."
+		::= { group2 180}
+------------------------------------------------------------
+-- 3 Alarm trap table 
+-- If you want to know the equipment trap list detail,
+-- Please find a Excel file named "RDU-SIC G2 trap table";
+------------------------------------------------------------
+
+alarmTrapTable OBJECT-TYPE
+	SYNTAX SEQUENCE OF AlarmTrapEntry
+	MAX-ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "
+		Table holding information about the submitted alarm traps."
+	::= { eNP-UPS-ITA2  3 }
+
+alarmTrapEntry OBJECT-TYPE
+	SYNTAX AlarmTrapEntry
+	MAX-ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "
+		An entry (conceptual row) in the alarmTrapTable."
+	INDEX { alarmIndex }
+	::= { alarmTrapTable 1 }
+
+AlarmTrapEntry ::= SEQUENCE {
+	alarmIndex Counter32,
+	alarmTime DisplayString,
+	alarmStatusChange StatusChange,
+	alarmSeverity Status,
+	alarmDescription DisplayString,
+	alarmId Integer32 }
+
+alarmIndex OBJECT-TYPE
+	SYNTAX Counter32
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		The unique sequence number of this alarm trap."
+	::= { alarmTrapEntry 1 }
+
+alarmTime OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		Date and time when event occured."
+	::= { alarmTrapEntry 2 }
+
+alarmStatusChange OBJECT-TYPE
+	SYNTAX StatusChange
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		Indicates 'activated' (0) or 'deactivated' (1) alarm events."
+	::= { alarmTrapEntry 3 }
+
+alarmSeverity OBJECT-TYPE
+	SYNTAX Status
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		The severity of the alarm. One of
+		(0) informational
+		(1) warning
+		(2) critical"
+	::= { alarmTrapEntry 4 }
+	
+alarmDescription OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		Free-text description of alarm."
+	::= { alarmTrapEntry 5 }
+	
+alarmId OBJECT-TYPE
+	SYNTAX Integer32
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "
+		Alarm Index in system."
+	::= { alarmTrapEntry 6 }
+
+	
+	
+------------------------------------------------------------
+-- System Alarm Trap Define
+------------------------------------------------------------
+
+systemAlarmTrap OBJECT IDENTIFIER ::= { eNP-UPS-ITA2 4 }
+
+systemAlarmTrapFormatDefine NOTIFICATION-TYPE
+	OBJECTS {
+		systemAlarmIndex,
+		systemAlarmTime,
+		systemAlarmStatusChange,
+		systemAlarmSeverity,
+		systemAlarmDescription,
+		systemAlarmId,
+		systemAlarmEquipId,
+		systemAlarmEquipTypeId }
+	STATUS current
+	DESCRIPTION "
+		An alarm trap is sent when an alarm occurs (activated) or
+		returns to normal state (deactivated). Alarm traps are logged
+		in alarmTrapTable. Variables in this trap:
+		* systemAlarmIndex - The unique sequence number of this alarm trap.
+		* systemAlarmTime - Date and time when event occured (local time).
+		* systemAlarmStatusChange - (0) activated or (1) deactivated.
+		* systemAlarmSeverity - The severity of the alarm..
+		* systemAlarmId - Alarm id.
+		* systemAlarmEquipId - Alarm equipment id.
+		* systemAlarmEquipTypeId - Alarm equipment type id."
+	::= { systemAlarmTrap 1 }
+	
+	
+------------------------------------------------------------
+-- End of MIB definitions
+------------------------------------------------------------
+END
+
